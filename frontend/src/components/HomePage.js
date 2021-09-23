@@ -26,7 +26,8 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   const [dialog, setDialog] = useState(false);
-  const [photo, setPhoto] = useState("");
+  const [image, setImage] = useState();
+  const [imageUrl, setImageUrl] = useState("");
   const [content, setContent] = useState("");
 
   useEffect(() => {
@@ -40,6 +41,11 @@ const HomePage = () => {
 
   const handleFollowUnfollow = (req, tok, id) => {
     dispatch(followUnfollow(req, tok, id));
+  };
+
+  const handleFile = (evt) => {
+    setImage(evt.target.files[0]);
+    setImageUrl(URL.createObjectURL(evt.target.files[0]));
   };
 
   const commentRequest = async (id, comment, name, profile) => {
@@ -61,21 +67,14 @@ const HomePage = () => {
   const handleClose = () => {
     setDialog(false);
     setContent("");
-    setPhoto("");
   };
 
   const handleSubmit = () => {
-    let data = {};
-    if (photo) {
-      data = {
-        content,
-        photo,
-      };
-    } else {
-      data = { content };
-    }
+    let formData = new FormData();
+    formData.append("content", content);
+    formData.append("image", image);
     handleClose();
-    dispatch(uploadPost(auth.token, data));
+    dispatch(uploadPost(auth.token, formData));
     dispatch(getFollowingPosts(auth.token));
   };
 
@@ -97,13 +96,11 @@ const HomePage = () => {
           <Dialog onClose={handleClose} open={dialog}>
             <div className={classes.uploadImage}>
               <h1>Upload Post</h1>
-              {photo ? (
-                <div className={classes.dialogImage}>
-                  <img src={photo} alt="" />
-                </div>
-              ) : (
-                ""
-              )}
+
+              <div className={classes.dialogImage}>
+                <img src={imageUrl} alt="" />
+              </div>
+
               <div style={{ padding: "10px 0" }}>
                 <TextField
                   label="Content"
@@ -118,13 +115,10 @@ const HomePage = () => {
                   maxRows={1}
                   value={content}
                 />
-                <TextField
-                  label="ImageUrl"
+                <input
                   style={{ width: "350px" }}
-                  variant="standard"
-                  onChange={(evt) => setPhoto(evt.target.value)}
-                  type="text"
-                  value={photo}
+                  onChange={handleFile}
+                  type="file"
                 />
               </div>
               <div>

@@ -65,11 +65,19 @@ const followUnfollow = (request, token, targetId) => async (dispatch) => {
 };
 
 //UPLOAD THE PROFILE PICTURE
-const uploadImage = (token, image_url, del) => async (dispatch) => {
+const uploadImage = (token, image, del) => async (dispatch) => {
   try {
+    const form = new FormData();
+    form.append("image", image);
+    form.append("del", del);
     dispatch({ type: "REQUEST" });
-    const config = authConfig(token);
-    await axios.put("/api/users/uploadImage", { image_url, del }, config);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        enctype: "multipart/form-data",
+      },
+    };
+    await axios.put("/api/users/uploadImage", form, config);
     await getUser(dispatch, token);
     dispatch({ type: "SUCCESS" });
   } catch (error) {
@@ -104,7 +112,12 @@ const getFollowingPosts = (token) => async (dispatch) => {
 const uploadPost = (token, data) => async (dispatch) => {
   try {
     dispatch({ type: "REQUEST" });
-    const config = authConfig(token);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        enctype: "multipart/form-data",
+      },
+    };
     await axios.post("/api/posts/upload", data, config);
     dispatch({ type: "SUCCESS" });
   } catch (error) {

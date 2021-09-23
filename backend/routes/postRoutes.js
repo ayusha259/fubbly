@@ -2,22 +2,31 @@ import express from "express";
 import User from "../models/userModel.js";
 import Post from "../models/postSchema.js";
 import auth from "../middlewares/authMiddleware.js";
+import upload from "../utils/multer.js";
 
 const route = express.Router();
 
-route.post("/upload", auth, async (req, res, next) => {
-  try {
-    const { user_id, ...rest } = req.body;
-    const newPost = await Post.create({ user: user_id, ...rest });
-    await User.findByIdAndUpdate(newPost.user, {
-      $push: { posts: newPost._id },
-    });
-    res.status(200).json(newPost);
-  } catch (error) {
-    res.status(500);
-    next(error);
+route.post(
+  "/upload",
+  [upload.single("image"), auth],
+  async (req, res, next) => {
+    try {
+      const { user_id, ...rest } = req.body;
+      const newPost = await Post.create({
+        user: user_id,
+        photo: `http://localhost:5000/uploads/${req.file.filename}`,
+        ...rest,
+      });
+      await User.findByIdAndUpdate(newPost.user, {
+        $push: { posts: newPost._id },
+      });
+      res.status(200).json("newPost");
+    } catch (error) {
+      res.status(500);
+      next(error);
+    }
   }
-});
+);
 
 route.get("/userposts", auth, async (req, res, next) => {
   try {

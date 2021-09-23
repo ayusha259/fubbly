@@ -113,10 +113,6 @@ const Posts = (props) => {
           <div>
             {stateComments.map((comment) => (
               <div key={comment._id} className={classes.cmt}>
-                <Avatar
-                  style={{ margin: "0 5px" }}
-                  src={comment.profilePicture}
-                />
                 <span>{`${comment.name} - `}</span>
                 <span>{comment.comment}</span>
               </div>
@@ -229,10 +225,6 @@ const Posts = (props) => {
         <div>
           {stateComments.slice(-2).map((comment) => (
             <div key={comment._id} className={classes.cmtPreview}>
-              <Avatar
-                style={{ margin: "0 5px", width: "20px", height: "20px" }}
-                src={comment.profilePicture}
-              />
               <span
                 style={{ fontSize: "0.8rem" }}
               >{`${comment.name} -  `}</span>

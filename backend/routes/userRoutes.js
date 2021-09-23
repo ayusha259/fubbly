@@ -3,6 +3,7 @@ import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/generateToken.js";
 import auth from "../middlewares/authMiddleware.js";
+import upload from "../utils/multer.js";
 const route = express.Router();
 
 route.post("/register", async (req, res, next) => {
@@ -88,23 +89,30 @@ route.get("/:id", async (req, res, next) => {
   }
 });
 
-route.put("/uploadImage", auth, async (req, res, next) => {
-  try {
-    const { user_id, image_url, del } = req.body;
-    await User.findByIdAndUpdate(user_id, {
-      profilePicture:
-        del || image_url === ""
-          ? "https://st4.depositphotos.com/4329009/19956/v/600/depositphotos_199564354-stock-illustration-creative-vector-illustration-default-avatar.jpg"
-          : image_url,
-    });
-    res.status(200).json({
-      message: "Uploaded Successfully",
-    });
-  } catch (error) {
-    res.status(500);
-    next(error);
+route.put(
+  "/uploadImage",
+  [upload.single("image"), auth],
+  async (req, res, next) => {
+    try {
+      const { user_id, del } = req.body;
+      // await User.findByIdAndUpdate(user_id, {
+      //   profilePicture:
+      //     del || req.file.path === ""
+      //       ? "https://st4.depositphotos.com/4329009/19956/v/600/depositphotos_199564354-stock-illustration-creative-vector-illustration-default-avatar.jpg"
+      //       : ,
+      // });
+      await User.findByIdAndUpdate(user_id, {
+        profilePicture: `http://localhost:5000/uploads/${req.file.filename}`,
+      });
+      res.status(200).json({
+        message: "Uploaded Successfully",
+      });
+    } catch (error) {
+      res.status(500);
+      next(error);
+    }
   }
-});
+);
 
 route.put("/follow", auth, async (req, res, next) => {
   try {

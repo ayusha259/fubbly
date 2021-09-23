@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Dialog from "@material-ui/core/Dialog";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { getUserPosts, uploadImage } from "../actions/userAction";
 import Loader from "./extras/Loader";
@@ -11,19 +10,25 @@ import axios from "axios";
 
 const ProfilePage = () => {
   const [modal, setModel] = useState(false);
+  const [image, setImage] = useState();
   const [imageUrl, setImageUrl] = useState("");
   const { user, auth, posts } = useSelector((state) => state.userInfo);
 
+  const handleFile = (evt) => {
+    setImage(evt.target.files[0]);
+    setImageUrl(URL.createObjectURL(evt.target.files[0]));
+  };
+
   const handleClose = () => {
     setModel(false);
+    setImageUrl("");
   };
 
   const dispatch = useDispatch();
 
   const handleUpload = () => {
-    dispatch(uploadImage(auth.token, imageUrl, false));
+    dispatch(uploadImage(auth.token, image, false));
     setModel(false);
-    setImageUrl("");
   };
 
   const commentRequest = async (id, comment, name, profile) => {
@@ -54,32 +59,52 @@ const ProfilePage = () => {
       {user ? (
         <>
           <Dialog onClose={handleClose} open={modal}>
-            <div className={classes.uploadImage}>
-              <h1>Upload Image</h1>
-              <div className={classes.dialogImage}>
-                <img src={imageUrl} alt="" />
-              </div>
-              <div style={{ padding: "10px 0" }}>
-                <TextField
+            <form>
+              <div className={classes.uploadImage}>
+                <h1>Upload Image</h1>
+                <div className={classes.dialogImage}>
+                  <img src={imageUrl} alt="" />
+                </div>
+                <div style={{ padding: "10px 0" }}>
+                  {/* <TextField
                   label="ImageUrl"
                   style={{ width: "350px" }}
                   variant="outlined"
                   onChange={(evt) => setImageUrl(evt.target.value)}
                   type="text"
                   value={imageUrl}
-                />
+                /> */}
+                  <input
+                    name="image"
+                    onChange={handleFile}
+                    accept="image/*"
+                    className={classes.input}
+                    id="contained-button-file"
+                    type="file"
+                  />
+                  <label htmlFor="contained-button-file">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      component="span"
+                    >
+                      Upload
+                    </Button>
+                  </label>
+                </div>
+                <div>
+                  <Button
+                    style={{ width: "100px" }}
+                    variant="contained"
+                    s
+                    color="primary"
+                    onClick={handleUpload}
+                  >
+                    Submit
+                  </Button>
+                </div>
               </div>
-              <div>
-                <Button
-                  style={{ width: "100px" }}
-                  variant="contained"
-                  color="primary"
-                  onClick={handleUpload}
-                >
-                  Upload
-                </Button>
-              </div>
-            </div>
+            </form>
           </Dialog>
           <div className={classes.main}>
             <div className={classes.headInfo}>

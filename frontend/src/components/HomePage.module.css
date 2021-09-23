@@ -79,3 +79,24 @@
 .uploadImageIcon:hover {
   cursor: pointer;
 }
+
+@media all and (max-width: 420px) {
+  .container {
+    /* background-color: black; */
+    width: 100%;
+  }
+
+  .feedContainer {
+    display: block;
+  }
+
+  .feed {
+    width: 100%;
+    padding: 0;
+    align-items: center;
+  }
+
+  .users {
+    display: none;
+  }
+}

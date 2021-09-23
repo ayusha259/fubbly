@@ -13,6 +13,7 @@ connectDb();
 const app = express();
 
 app.use(express.json());
+app.use("/uploads", express.static("./backend/uploads"));
 
 app.use("/api/users/", userRoutes);
 app.use("/api/posts/", postRoutes);

@@ -74,3 +74,13 @@
   align-items: center;
   padding: 20px 0;
 }
+
+.input {
+  display: none;
+}
+
+@media all and (max-width:420px) {
+  .posts {
+    
+  }
+}
