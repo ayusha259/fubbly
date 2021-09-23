@@ -1,0 +1,76 @@
+.main {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+
+.profilePic {
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profilePic > img {
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.nameFollow {
+  margin-top: 10px;
+}
+
+.name {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.followings {
+  margin: 10px 0;
+}
+
+.followings > span {
+  margin: 0 15px;
+}
+.uploadImage {
+  height: 600px;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  text-align: center;
+}
+
+.dialogImage {
+  padding: 20px;
+  height: 65%;
+  text-align: center;
+}
+
+.dialogImage > img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.uploadImageIcon {
+  font-size: 1.3rem;
+  color: #0a6ed1;
+  margin-top: 8px;
+}
+
+.uploadImageIcon:hover {
+  cursor: pointer;
+}
+
+.posts {
+  margin-top: 50px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+}

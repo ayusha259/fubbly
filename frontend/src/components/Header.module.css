@@ -1,0 +1,92 @@
+.fakeNav {
+  height: 65px;
+  width: 100%;
+  z-index: -1;
+}
+
+.navbar {
+  background-color: #1f1f1f;
+  color: #7e898d;
+  height: 65px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.navContainer {
+  width: 80%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  color: #ebe8e8;
+}
+
+.links {
+  list-style: none;
+  display: flex;
+}
+
+.links li {
+  margin-right: 20px;
+}
+
+.links li:hover {
+  cursor: pointer;
+  color: #ebe8e8;
+}
+
+.disableLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.activeLink {
+  color: #ebe8e8;
+}
+
+.activeUserLink {
+  color: #7e898d;
+}
+
+.activeUserLink:hover {
+  color: #ebe8e8;
+}
+
+.iconAndLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navIcon {
+  font-size: 1.1rem;
+  margin-right: 5px;
+}
+
+.loggedInUser {
+  color: white;
+}
+
+@media (max-width: 650px) {
+  .navContainer {
+    width: 90%;
+  }
+
+  .navIcon {
+    font-size: 1.2rem;
+  }
+
+  .links li {
+    margin-right: 10px;
+  }
+
+  .hideLinkText {
+    display: none;
+  }
+}

@@ -1,0 +1,20 @@
+.btn {
+  padding: 4px 6px;
+  margin-left: 10px;
+  border-radius: 3px;
+  font-size: 0.9rem;
+}
+
+.unfollow {
+  background-color: #0a6ed1;
+  color: white;
+}
+
+.follow {
+  border: 1px solid #0a6ed1;
+  color: #0a6ed1;
+}
+
+.btn:hover {
+  cursor: pointer;
+}

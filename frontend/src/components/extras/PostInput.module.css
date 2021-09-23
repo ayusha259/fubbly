@@ -1,0 +1,22 @@
+.container {
+  width: 80%;
+}
+
+.main {
+  display: flex;
+}
+
+.profilePic {
+  width: 10%;
+  background-color: aqua;
+}
+
+.autoText {
+  outline: none;
+  border: none;
+}
+
+.content {
+  width: 90%;
+  background-color: bisque;
+}
