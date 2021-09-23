@@ -33,6 +33,6 @@ app.use("/api/posts/", postRoutes);
 app.use(notFound);
 app.use(errHandler);
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log("Server started at PORT:5000");
 });
