@@ -12,6 +12,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+
       <Switch>
         <ProtectedRoute exact path="/" component={HomePage} />
         <Route exact path="/login" component={LoginPage} />
