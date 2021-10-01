@@ -22,7 +22,7 @@ app.use("/uploads", express.static("./backend/uploads"));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("./frontend/build"));
-  app.get("*", (req, res) => {
+  app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend/build"));
   });
 }
