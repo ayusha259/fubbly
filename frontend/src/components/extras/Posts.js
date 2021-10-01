@@ -108,6 +108,51 @@ const Posts = (props) => {
 
   return (
     <>
+      {/* <div className="post">
+        <div className="post-header">
+          <div className="post-headerLeft">
+            <Avatar src={profile} style={{ height: 40, width: 40 }} />
+            <span>{name}</span>
+          </div>
+          <MoreHorizIcon />
+          <div></div>
+        </div>
+        <div className="post-body">
+          <img className="post-body-image" src={image} alt="test" />
+        </div>
+        <div className="post-details">
+          <div className="post-details-caption">
+            <span>{name} : </span>
+            <p>{content}</p>
+          </div>
+          <div className="post-details-comments">
+            {stateComments.map((comment) => (
+              <div className="comment">
+                <span>{comment.username}</span>
+                <span>{comment.comment}</span>
+              </div>
+            ))}
+          </div>
+          <div className="post-body-comment">
+            <input
+              onChange={this.handleChange}
+              value={this.state.input}
+              type="text"
+              placeholder="Add a comment..."
+            />
+            <span
+              onClick={
+                this.state.input.length > 0 ? this.handleCommentSubmit : ""
+              }
+              style={{
+                color: this.state.input.length > 0 ? "#0798F6" : "#B5E0FD",
+              }}
+            >
+              Post
+            </span>
+          </div>
+        </div>
+      </div> */}
       <Dialog onClose={handleDialogClose} open={dialog}>
         <div className={classes.all_cmt}>
           <div>
@@ -156,14 +201,6 @@ const Posts = (props) => {
             <span>{name}</span>
           </div>
           <MoreHorizOutlinedIcon className={classes.mui_icon} />
-          {/* {popup ? (
-          <div onClick={handleDelete} className={classes.tweetbox_popup}>
-            <DeleteOutlineIcon className={classes.mui_icon} />
-            <span>Delete the tweet</span>
-          </div>
-        ) : (
-          ""
-        )} */}
         </div>
         <div className={classes.mainBody}>
           {image ? (
@@ -188,13 +225,6 @@ const Posts = (props) => {
           >
             {timeSince(created)}
           </span>
-          {/* {tweetimage === "" ? (
-          ""
-        ) : (
-          <div className={classes.tweetbox_body_image}>
-            <img src={tweetimage} alt="TweetImage" />
-          </div>
-        )} */}
         </div>
         <div className={classes.tweetbox_likes}>
           <span className={classes.like_icon}>
@@ -260,22 +290,6 @@ const Posts = (props) => {
         </div>
       </div>
     </>
-    // <div className={classes.posts}>
-    //   <div className={classes.userInfo}>
-    //     <div className={classes.nameDp}>
-    //       <Avatar
-    //         style={{ width: "38px", height: "38px" }}
-    //         src="https://m.media-amazon.com/images/M/MV5BZWUzYjE1MDQtYmJlMS00ZDg5LWExOGQtYzgyZWY4MjEwMDFlXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_.jpg"
-    //         alt=""
-    //       />
-    //       <span className={classes.name}>Chandler Bing</span>
-    //     </div>
-    //   </div>
-    //   <div className={classes.imageContainer}>
-    //     <img src="" alt="" />
-    //   </div>
-    //   <div className={classes.postContent}></div>
-    // </div>
   );
 };
 

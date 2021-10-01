@@ -27,7 +27,7 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
 
   const handleUpload = () => {
-    dispatch(uploadImage(auth.token, image, false));
+    dispatch(uploadImage(auth.token, image));
     setModel(false);
   };
 

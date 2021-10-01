@@ -65,11 +65,11 @@ const followUnfollow = (request, token, targetId) => async (dispatch) => {
 };
 
 //UPLOAD THE PROFILE PICTURE
-const uploadImage = (token, image, del) => async (dispatch) => {
+const uploadImage = (token, image) => async (dispatch) => {
   try {
     const form = new FormData();
     form.append("image", image);
-    form.append("del", del);
+    // form.append("del", del);
     dispatch({ type: "REQUEST" });
     const config = {
       headers: {

@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDb from "./utils/connectDb.js";
 import { notFound, errHandler } from "./middlewares/errHandlers.js";
-import path, { dirname } from "path";
+import path from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);

@@ -3,6 +3,8 @@ import User from "../models/userModel.js";
 import Post from "../models/postSchema.js";
 import auth from "../middlewares/authMiddleware.js";
 import upload from "../utils/multer.js";
+import cloudinary from "../utils/cloudinary.js";
+import fs from "fs";
 
 const route = express.Router();
 
@@ -12,9 +14,14 @@ route.post(
   async (req, res, next) => {
     try {
       const { user_id, ...rest } = req.body;
+      const uploaded = await cloudinary.uploader.upload(req.file.path, {
+        public_id: `${user_id}-${req.file.filename}`,
+        folder: user_id,
+      });
+      fs.unlinkSync(req.file.path);
       const newPost = await Post.create({
         user: user_id,
-        photo: `http://localhost:5000/uploads/${req.file.filename}`,
+        photo: uploaded.url,
         ...rest,
       });
       await User.findByIdAndUpdate(newPost.user, {

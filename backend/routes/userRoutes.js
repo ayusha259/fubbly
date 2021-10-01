@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/generateToken.js";
 import auth from "../middlewares/authMiddleware.js";
 import upload from "../utils/multer.js";
+import cloudinary from "../utils/cloudinary.js";
+import fs from "fs";
 const route = express.Router();
 
 route.post("/register", async (req, res, next) => {
@@ -94,17 +96,23 @@ route.put(
   [upload.single("image"), auth],
   async (req, res, next) => {
     try {
-      const { user_id, del } = req.body;
+      const { user_id } = req.body;
       // await User.findByIdAndUpdate(user_id, {
       //   profilePicture:
       //     del || req.file.path === ""
       //       ? "https://st4.depositphotos.com/4329009/19956/v/600/depositphotos_199564354-stock-illustration-creative-vector-illustration-default-avatar.jpg"
       //       : ,
       // });
-      await User.findByIdAndUpdate(user_id, {
-        profilePicture: `http://localhost:5000/uploads/${req.file.filename}`,
+      const uploaded = await cloudinary.uploader.upload(req.file.path, {
+        public_id: `${user_id}-${req.file.filename}`,
+        folder: user_id,
       });
+      await User.findByIdAndUpdate(user_id, {
+        profilePicture: uploaded.url,
+      });
+      fs.unlinkSync(req.file.path);
       res.status(200).json({
+        image: uploaded,
         message: "Uploaded Successfully",
       });
     } catch (error) {
