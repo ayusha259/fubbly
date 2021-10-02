@@ -69,7 +69,7 @@ route.get("/auth/userData", auth, async (req, res, next) => {
 
 route.get("/allusers", async (req, res, next) => {
   try {
-    const allUsers = await User.find({});
+    const allUsers = await User.find({}).select("-password");
     res.status(200).json(allUsers);
   } catch (error) {
     next(error);

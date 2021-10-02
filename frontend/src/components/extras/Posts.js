@@ -11,13 +11,13 @@ import { useSelector } from "react-redux";
 import classes from "./Posts.module.css";
 const Posts = (props) => {
   const {
+    username,
     name,
     profile,
     content,
     image,
     likes,
     comments,
-    width,
     liked,
     _id,
     postComment,
@@ -191,14 +191,14 @@ const Posts = (props) => {
           </div>
         </div>
       </Dialog>
-      <div style={{ width: width }} className={classes.tweetbox}>
+      <div className={classes.tweetbox}>
         <div className={classes.tweetbox_user}>
           <div className={classes.tweetbox_user_inf}>
             <Avatar
-              style={{ width: "45px", height: "45px", margin: "auto" }}
+              style={{ width: "40px", height: "40px", margin: "auto" }}
               src={profile}
             />
-            <span>{name}</span>
+            <span>{username}</span>
           </div>
           <MoreHorizOutlinedIcon className={classes.mui_icon} />
         </div>
@@ -210,57 +210,58 @@ const Posts = (props) => {
           ) : (
             ""
           )}
-          {modal ? (
-            <div onClick={() => setModal(false)} className={classes.fullImage}>
-              <img src={image} alt="" />
-            </div>
-          ) : (
-            ""
-          )}
-          <div className={classes.content}>
-            <p>{content}</p>
+        </div>
+        <div className={classes.postContent}>
+          <div className={classes.tweetbox_likes}>
+            <span className={classes.like_icon}>
+              {like ? (
+                <FavoriteIcon
+                  id="like_icon"
+                  onClick={() => handleLike("dislike")}
+                  style={{ color: "#ea442b" }}
+                  className={classes.mui_icon}
+                />
+              ) : (
+                <FavoriteBorderIcon
+                  id="like_icon"
+                  onClick={() => handleLike("like")}
+                  className={classes.mui_icon}
+                />
+              )}
+              {noOfLikes}
+            </span>
+            <span className={classes.comment_icon}>
+              <ChatBubbleOutlineIcon
+                onClick={() => setDialog(true)}
+                className={classes.mui_icon}
+              />{" "}
+              {noOfCmt}
+            </span>
           </div>
-          <span
-            style={{ fontSize: "0.65rem", color: "#414a4c", marginTop: "10px" }}
-          >
-            {timeSince(created)}
-          </span>
-        </div>
-        <div className={classes.tweetbox_likes}>
-          <span className={classes.like_icon}>
-            {like ? (
-              <FavoriteIcon
-                id="like_icon"
-                onClick={() => handleLike("dislike")}
-                style={{ color: "#ea442b" }}
-                className={classes.mui_icon}
-              />
-            ) : (
-              <FavoriteBorderIcon
-                id="like_icon"
-                onClick={() => handleLike("like")}
-                className={classes.mui_icon}
-              />
-            )}
-            {noOfLikes}
-          </span>
-          <span className={classes.comment_icon}>
-            <ChatBubbleOutlineIcon
-              onClick={() => setDialog(true)}
-              className={classes.mui_icon}
-            />{" "}
-            {noOfCmt}
-          </span>
-        </div>
-        <div>
-          {stateComments.slice(-2).map((comment) => (
-            <div key={comment._id} className={classes.cmtPreview}>
-              <span
-                style={{ fontSize: "0.8rem" }}
-              >{`${comment.name} -  `}</span>
-              <span style={{ fontSize: "0.8rem" }}>{comment.comment}</span>
-            </div>
-          ))}
+          <div className={classes.content}>
+            <p>
+              <span>{user.username} - </span>
+              {content}
+            </p>
+            <span
+              style={{
+                fontSize: "0.65rem",
+                color: "#414a4c",
+              }}
+            >
+              {timeSince(created)}
+            </span>
+          </div>
+          <div className={classes.comment}>
+            {stateComments.slice(-2).map((comment) => (
+              <div key={comment._id} className={classes.cmtPreview}>
+                <span
+                  style={{ fontSize: "0.8rem", fontWeight: "500" }}
+                >{`${comment.name} -  `}</span>
+                <span style={{ fontSize: "0.8rem" }}>{comment.comment}</span>
+              </div>
+            ))}
+          </div>
         </div>
         <div>
           <form

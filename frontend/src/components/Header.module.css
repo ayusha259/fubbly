@@ -5,12 +5,13 @@
 }
 
 .navbar {
-  background-color: #1f1f1f;
+  background-color: #272727;
   color: #7e898d;
   height: 65px;
   position: fixed;
   top: 0;
   width: 100%;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.1);
   z-index: 10;
 }
 

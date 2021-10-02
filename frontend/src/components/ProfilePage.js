@@ -142,6 +142,7 @@ const ProfilePage = () => {
                     _id={post._id}
                     liked={post.likes.includes(user._id)}
                     name={user.name}
+                    username={user.username}
                     profile={user.profilePicture}
                     content={post.content}
                     image={post.photo}

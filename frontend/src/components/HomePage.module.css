@@ -80,7 +80,7 @@
   cursor: pointer;
 }
 
-@media all and (max-width: 420px) {
+@media all and (max-width: 520px) {
   .container {
     /* background-color: black; */
     width: 100%;
@@ -98,5 +98,15 @@
 
   .users {
     display: none;
+  }
+  .uploadImage {
+    width: 100%;
+    height: 400px;
+  }
+  .dialogImage {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

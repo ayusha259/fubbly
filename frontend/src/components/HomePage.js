@@ -80,7 +80,11 @@ const HomePage = () => {
 
   const getIndUser = (id) => {
     const user = allUsers.find((u) => u._id === id);
-    return { name: user.name, profile: user.profilePicture };
+    return {
+      name: user.name,
+      username: user.username,
+      profile: user.profilePicture,
+    };
   };
 
   let filterdUsers = user
@@ -105,7 +109,7 @@ const HomePage = () => {
                 <TextField
                   label="Content"
                   style={{
-                    width: "350px",
+                    width: "100%",
                     marginBottom: "10px",
                   }}
                   variant="standard"
@@ -116,7 +120,7 @@ const HomePage = () => {
                   value={content}
                 />
                 <input
-                  style={{ width: "350px" }}
+                  style={{ width: "100%" }}
                   onChange={handleFile}
                   type="file"
                 />
