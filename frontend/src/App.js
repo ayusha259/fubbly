@@ -4,10 +4,10 @@ import ProtectedRoute from "./ProtectedRoute";
 import Header from "./components/Header";
 import HomePage from "./components/HomePage";
 import LoginPage from "./components/LoginPage";
-import "./App.css";
+
 import RegisterPage from "./components/RegisterPage";
 import ProfilePage from "./components/ProfilePage";
-
+import "./App.css";
 function App() {
   return (
     <div className="App">

@@ -9,7 +9,7 @@ const auth = (req, res, next) => {
       try {
         token = req.headers.authorization.split(" ")[1];
         const decodedToken = jwt.verify(token, process.env.JWT_CODE);
-        req.body.user_id = decodedToken.id;
+        req.user = decodedToken.id;
         next();
       } catch (error) {
         res.status(401);

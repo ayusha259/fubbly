@@ -1,6 +1,6 @@
 import express from "express";
 import User from "../models/userModel.js";
-import Post from "../models/postSchema.js";
+import { Post, Comment } from "../models/postSchema.js";
 import auth from "../middlewares/authMiddleware.js";
 import upload from "../utils/multer.js";
 import cloudinary from "../utils/cloudinary.js";
@@ -10,10 +10,11 @@ const route = express.Router();
 
 route.post(
   "/upload",
-  [upload.single("image"), auth],
+  [auth, upload.single("image")],
   async (req, res, next) => {
     try {
-      const { user_id, ...rest } = req.body;
+      const user_id = req.user;
+      const { ...rest } = req.body;
       const uploaded = await cloudinary.uploader.upload(req.file.path, {
         public_id: `${user_id}-${req.file.filename}`,
         folder: user_id,
@@ -21,7 +22,7 @@ route.post(
       fs.unlinkSync(req.file.path);
       const newPost = await Post.create({
         user: user_id,
-        photo: uploaded.url,
+        photo: { url: uploaded.url, public_id: uploaded.public_id },
         ...rest,
       });
       await User.findByIdAndUpdate(newPost.user, {
@@ -37,8 +38,15 @@ route.post(
 
 route.get("/userposts", auth, async (req, res, next) => {
   try {
-    const { user_id } = req.body;
-    const posts = await Post.find({ user: user_id }).sort("-createdAt");
+    const user_id = req.user;
+    const posts = await Post.find({ user: user_id })
+      .sort("-createdAt")
+      .populate({
+        path: "comments",
+        populate: { path: "user", select: "username profilePicture" },
+      })
+      .populate("likes", "username profilePicture");
+    // posts.comments = posts.comments.populate("user");
     res.status(200).json(posts);
   } catch (error) {
     next(error);
@@ -47,13 +55,18 @@ route.get("/userposts", auth, async (req, res, next) => {
 
 route.get("/followingposts", auth, async (req, res, next) => {
   try {
-    const { user_id } = req.body;
+    const user_id = req.user;
     const user = await User.findById(user_id).select("following");
     if (user) {
       const posts = await Post.find()
         .where("user")
         .in(user.following)
-        .sort("-createdAt");
+        .sort("-createdAt")
+        .populate({
+          path: "comments",
+          populate: { path: "user", select: "username profilePicture" },
+        })
+        .populate("likes", "username profilePicture");
       res.status(200).json(posts);
     } else {
       res.status(400);
@@ -80,7 +93,7 @@ route.get("/:id", async (req, res, next) => {
 
 route.put("/like/:id", auth, async (req, res, next) => {
   try {
-    const { user_id } = req.body;
+    const user_id = req.user;
     const post = await Post.findById(req.params.id);
     if (post) {
       if (!post.likes.includes(user_id)) {
@@ -100,17 +113,23 @@ route.put("/like/:id", auth, async (req, res, next) => {
 
 route.put("/comment/:id", auth, async (req, res, next) => {
   try {
-    const { user_id, comment, name, profilePicture } = req.body;
+    const user_id = req.user;
+    const { comment, name, profilePicture } = req.body;
     const post = await Post.findById(req.params.id);
+    const newComment = await Comment.create({
+      user: user_id,
+      comment: comment,
+    });
     if (post) {
       await post.update({
         $push: {
-          comments: {
-            user: user_id,
-            comment: comment,
-            name: name,
-            profilePicture: profilePicture,
-          },
+          comments: newComment._id,
+          // comments: {
+          //   user: user_id,
+          //   comment: comment,
+          //   name: name,
+          //   profilePicture: profilePicture,
+          // },
         },
       });
       res.status(200).json("Comment Posted");

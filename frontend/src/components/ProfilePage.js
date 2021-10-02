@@ -31,10 +31,10 @@ const ProfilePage = () => {
     setModel(false);
   };
 
-  const commentRequest = async (id, comment, name, profile) => {
+  const commentRequest = async (id, comment) => {
     await axios.put(
       `/api/posts/comment/${id}`,
-      { comment: comment, name: name, profilePicture: profile },
+      { comment: comment },
       {
         headers: {
           Authorization: `Bearer ${auth.token}`,
@@ -43,8 +43,8 @@ const ProfilePage = () => {
     );
   };
 
-  const postComment = (id, comment, name, profile) => {
-    commentRequest(id, comment, name, profile);
+  const postComment = (id, comment) => {
+    commentRequest(id, comment);
     dispatch(getUserPosts(auth.token));
   };
 
@@ -109,7 +109,7 @@ const ProfilePage = () => {
           <div className={classes.main}>
             <div className={classes.headInfo}>
               <div className={classes.profilePic}>
-                <img src={user.profilePicture} alt="" />
+                <img src={user.profilePicture.url} alt="" />
 
                 <i
                   onClick={() => setModel(true)}

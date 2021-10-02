@@ -1,5 +1,21 @@
 import mongoose from "mongoose";
 
+const commentSchema = mongoose.Schema({
+  user: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  comment: {
+    type: String,
+    required: true,
+  },
+  likes: {
+    type: Array,
+    default: [],
+  },
+});
+
 const postSchema = mongoose.Schema(
   {
     user: {
@@ -9,39 +25,27 @@ const postSchema = mongoose.Schema(
     },
     content: {
       type: String,
-      required: true,
     },
     photo: {
-      type: String,
-      default: null,
+      url: {
+        type: String,
+        required: true,
+      },
+      public_id: {
+        type: String,
+        required: true,
+      },
     },
-    likes: {
-      type: Array,
-      required: true,
-      default: [],
-    },
+    likes: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     comments: [
       {
-        user: {
-          type: mongoose.Types.ObjectId,
-          required: true,
-          ref: "User",
-        },
-        comment: {
-          type: String,
-          required: true,
-        },
-        name: {
-          type: String,
-          required: true,
-        },
-        profilePicture: {
-          type: String,
-        },
-        likes: {
-          type: Array,
-          default: [],
-        },
+        type: mongoose.Types.ObjectId,
+        ref: "Comment",
       },
     ],
   },
@@ -51,5 +55,6 @@ const postSchema = mongoose.Schema(
 );
 
 const Post = mongoose.model("Post", postSchema);
+const Comment = mongoose.model("Comment", commentSchema);
 
-export default Post;
+export { Post, Comment };

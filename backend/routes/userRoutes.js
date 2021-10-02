@@ -52,12 +52,10 @@ route.post("/login", async (req, res, next) => {
 
 route.get("/auth/userData", auth, async (req, res, next) => {
   try {
-    const user = await User.findById(req.body.user_id).select(
-      "-password -email"
-    );
+    const user_id = req.user;
+    const user = await User.findById(user_id).select("-password -email -posts");
     if (user) {
-      res.status(200);
-      res.json(user);
+      res.status(200).json(user);
     } else {
       res.status(500);
       throw new Error("Please Login Again");
@@ -69,7 +67,9 @@ route.get("/auth/userData", auth, async (req, res, next) => {
 
 route.get("/allusers", async (req, res, next) => {
   try {
-    const allUsers = await User.find({}).select("-password");
+    const allUsers = await User.find({}).select(
+      "username name _id profilePicture"
+    );
     res.status(200).json(allUsers);
   } catch (error) {
     next(error);
@@ -78,7 +78,7 @@ route.get("/allusers", async (req, res, next) => {
 
 route.get("/:id", async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id).select("-password");
+    const user = await User.findById(req.params.id).select("-password -email");
     if (user) {
       res.status(200);
       res.json(user);
@@ -93,28 +93,36 @@ route.get("/:id", async (req, res, next) => {
 
 route.put(
   "/uploadImage",
-  [upload.single("image"), auth],
+  [auth, upload.single("image")],
   async (req, res, next) => {
     try {
-      const { user_id } = req.body;
-      // await User.findByIdAndUpdate(user_id, {
-      //   profilePicture:
-      //     del || req.file.path === ""
-      //       ? "https://st4.depositphotos.com/4329009/19956/v/600/depositphotos_199564354-stock-illustration-creative-vector-illustration-default-avatar.jpg"
-      //       : ,
-      // });
+      const user_id = req.user;
+      // // await User.findByIdAndUpdate(user_id, {
+      // //   profilePicture:
+      // //     del || req.file.path === ""
+      // //       ? "https://st4.depositphotos.com/4329009/19956/v/600/depositphotos_199564354-stock-illustration-creative-vector-illustration-default-avatar.jpg"
+      // //       : ,
+      // // });
       const uploaded = await cloudinary.uploader.upload(req.file.path, {
         public_id: `${user_id}-${req.file.filename}`,
         folder: user_id,
       });
-      await User.findByIdAndUpdate(user_id, {
-        profilePicture: uploaded.url,
-      });
+      const { profilePicture: oldDp } = await User.findOneAndUpdate(
+        { _id: user_id },
+        {
+          profilePicture: {
+            url: uploaded.url,
+            public_id: uploaded.public_id,
+          },
+        }
+      );
+      await cloudinary.uploader.destroy(oldDp.public_id);
       fs.unlinkSync(req.file.path);
       res.status(200).json({
-        image: uploaded,
+        old: oldDp,
         message: "Uploaded Successfully",
       });
+      // res.status(200).send(user_id);
     } catch (error) {
       res.status(500);
       next(error);
@@ -124,7 +132,8 @@ route.put(
 
 route.put("/follow", auth, async (req, res, next) => {
   try {
-    const { user_id, targetId } = req.body;
+    const user_id = req.user;
+    const { targetId } = req.body;
     await User.findByIdAndUpdate(user_id, {
       $push: { following: targetId },
     });

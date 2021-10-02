@@ -74,6 +74,16 @@
   color: white;
 }
 
+.search {
+  position: relative;
+}
+
+.searchBar {
+  padding: 2px 5px;
+  outline: none;
+  border: none;
+}
+
 @media (max-width: 650px) {
   .navContainer {
     width: 90%;

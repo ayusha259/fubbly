@@ -34,7 +34,6 @@ const HomePage = () => {
     dispatch(getAllUsers());
     dispatch(getFollowingPosts(auth.token));
     return () => {
-      dispatch({ type: "ALL_USERS_CLEAN" });
       dispatch({ type: "CLEAN_FOLLOWING_POSTS" });
     };
   }, [dispatch, auth.token]);
@@ -161,7 +160,7 @@ const HomePage = () => {
                 {filterdUsers.map((u) => (
                   <div key={u._id} className={classes.user}>
                     <span style={{ display: "flex", alignItems: "center" }}>
-                      <Avatar src={u.profilePicture} />
+                      <Avatar src={u.profilePicture.url} />
                       <span
                         style={{ marginLeft: "7px" }}
                         className={classes.name}

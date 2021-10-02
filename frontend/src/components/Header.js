@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogout } from "../actions/userAction";
 import { Link, NavLink } from "react-router-dom";
@@ -6,15 +6,29 @@ import { Link, NavLink } from "react-router-dom";
 // import Snackbar from "@material-ui/core/Snackbar";
 
 import classes from "./Header.module.css";
+import UserSearch from "./extras/UserSearch";
 
 const Header = () => {
   // const [logoutPop, setLogoutPop] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [search, setSearch] = useState("");
+  const [toggleSearch, setToggleSearch] = useState(false);
 
   const { user } = useSelector((state) => state.userInfo);
-
+  let userSearch = useRef();
+  let userSearchInput = useRef();
   const dispatch = useDispatch();
   // const history = useHistory();
+
+  // const showMenu = (e) => {
+  //   setToggleSearch(true, () => document.addEventListener("click", closeMenu));
+  // };
+
+  // const closeMenu = (e) => {
+  //   setToggleSearch(false, () =>
+  //     document.removeEventListener("click", closeMenu)
+  //   );
+  // };
 
   useEffect(() => {
     if (user) {
@@ -27,6 +41,18 @@ const Header = () => {
   const handleLogout = () => {
     dispatch(userLogout());
     setIsLoggedIn(false);
+  };
+
+  const handleMenu = (evt) => {
+    setToggleSearch(true);
+    window.addEventListener("click", (e) => {
+      if (
+        !userSearch.current.contains(e.target) &&
+        !userSearchInput.current.contains(e.target)
+      ) {
+        setToggleSearch(false);
+      }
+    });
   };
 
   // const handleSnackbarClose = () => {
@@ -43,6 +69,28 @@ const Header = () => {
               FACEPAGE
             </Link>
           </h2>
+          {isLoggedIn ? (
+            <div className={classes.search}>
+              <input
+                ref={userSearchInput}
+                type="text"
+                value={search}
+                onFocus={handleMenu}
+                onChange={(e) => setSearch(e.target.value)}
+                className={classes.searchBar}
+                placeholder="Search"
+              />
+              {toggleSearch ? (
+                <div ref={userSearch}>
+                  <UserSearch search={search} />
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+          ) : (
+            ""
+          )}
           <ul className={classes.links}>
             <li>
               <span className={classes.link}>

@@ -12,7 +12,6 @@ import classes from "./Posts.module.css";
 const Posts = (props) => {
   const {
     username,
-    name,
     profile,
     content,
     image,
@@ -28,8 +27,8 @@ const Posts = (props) => {
   const [like, setLike] = useState(liked);
   const [cmt, setCmt] = useState("");
   const [noOfLikes, setNoOfLikes] = useState(likes);
-  const [stateComments, setStateComments] = useState(comments);
-  const [noOfCmt, setNoOfCmt] = useState(comments.length);
+  // const [stateComments, setStateComments] = useState(comments);
+  // const [noOfCmt, setNoOfCmt] = useState(comments.length);
 
   const { user, auth } = useSelector((state) => state.userInfo);
 
@@ -72,21 +71,18 @@ const Posts = (props) => {
     );
   };
 
-  console.log(stateComments.slice(-2));
-
-  const postCommentHandler = (id, comment, name, profile) => {
-    postComment(id, comment, name, profile);
+  const postCommentHandler = (id, comment) => {
+    postComment(id, comment);
     setCmt("");
-    setNoOfCmt(noOfCmt + 1);
-    setStateComments((old) => [
-      ...old,
-      {
-        name: name,
-        profilePicture: profile,
-        comment: comment,
-        _id: Math.random(),
-      },
-    ]);
+    // setNoOfCmt(noOfCmt + 1);
+    // setStateComments((old) => [
+    //   ...old,
+    //   {
+    //     comment: comment,
+    //     user
+    //     _id: Math.random(),
+    //   },
+    // ]);
   };
 
   const handleDialogClose = () => {
@@ -156,9 +152,13 @@ const Posts = (props) => {
       <Dialog onClose={handleDialogClose} open={dialog}>
         <div className={classes.all_cmt}>
           <div>
-            {stateComments.map((comment) => (
+            {comments.map((comment) => (
               <div key={comment._id} className={classes.cmt}>
-                <span>{`${comment.name} - `}</span>
+                <Avatar
+                  src={comment.user.profilePicture.url}
+                  style={{ marginRight: "10px" }}
+                />
+                <span>{`${comment.user.username} - `}</span>
                 <span>{comment.comment}</span>
               </div>
             ))}
@@ -168,7 +168,7 @@ const Posts = (props) => {
               className={`${classes.cmt_box}`}
               onSubmit={(e) => {
                 e.preventDefault();
-                postCommentHandler(_id, cmt, user.name, user.profilePicture);
+                postCommentHandler(_id, cmt);
               }}
             >
               <input
@@ -196,7 +196,7 @@ const Posts = (props) => {
           <div className={classes.tweetbox_user_inf}>
             <Avatar
               style={{ width: "40px", height: "40px", margin: "auto" }}
-              src={profile}
+              src={profile.url}
             />
             <span>{username}</span>
           </div>
@@ -205,7 +205,7 @@ const Posts = (props) => {
         <div className={classes.mainBody}>
           {image ? (
             <div onClick={() => setModal(true)} className={classes.bodyImage}>
-              <img src={image} alt="" />
+              <img src={image.url} alt="" />
             </div>
           ) : (
             ""
@@ -235,7 +235,7 @@ const Posts = (props) => {
                 onClick={() => setDialog(true)}
                 className={classes.mui_icon}
               />{" "}
-              {noOfCmt}
+              {comments.length}
             </span>
           </div>
           <div className={classes.content}>
@@ -253,11 +253,11 @@ const Posts = (props) => {
             </span>
           </div>
           <div className={classes.comment}>
-            {stateComments.slice(-2).map((comment) => (
+            {comments.slice(-2).map((comment) => (
               <div key={comment._id} className={classes.cmtPreview}>
-                <span
-                  style={{ fontSize: "0.8rem", fontWeight: "500" }}
-                >{`${comment.name} -  `}</span>
+                <span style={{ fontSize: "0.8rem", fontWeight: "500" }}>
+                  {`${comment.user.username} -  `}
+                </span>
                 <span style={{ fontSize: "0.8rem" }}>{comment.comment}</span>
               </div>
             ))}
@@ -268,7 +268,7 @@ const Posts = (props) => {
             className={classes.cmt_box}
             onSubmit={(e) => {
               e.preventDefault();
-              postCommentHandler(_id, cmt, user.name, user.profilePicture);
+              postCommentHandler(_id, cmt);
             }}
           >
             <input
