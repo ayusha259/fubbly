@@ -149,7 +149,8 @@ route.put("/follow", auth, async (req, res, next) => {
 
 route.put("/unfollow", auth, async (req, res, next) => {
   try {
-    const { user_id, targetId } = req.body;
+    const user_id = req.user;
+    const { targetId } = req.body;
     await User.findByIdAndUpdate(user_id, {
       $pull: { following: targetId },
     });

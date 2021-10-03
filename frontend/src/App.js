@@ -8,11 +8,11 @@ import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
 import ProfilePage from "./components/ProfilePage";
 import "./App.css";
+
 function App() {
   return (
     <div className="App">
       <Header />
-
       <Switch>
         <ProtectedRoute exact path="/" component={HomePage} />
         <Route exact path="/login" component={LoginPage} />

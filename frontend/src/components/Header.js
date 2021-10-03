@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { userLogout } from "../actions/userAction";
+import { getAllUsers, userLogout } from "../actions/userAction";
 import { Link, NavLink } from "react-router-dom";
 
 // import Snackbar from "@material-ui/core/Snackbar";
@@ -46,11 +46,13 @@ const Header = () => {
   const handleMenu = (evt) => {
     setToggleSearch(true);
     window.addEventListener("click", (e) => {
-      if (
-        !userSearch.current.contains(e.target) &&
-        !userSearchInput.current.contains(e.target)
-      ) {
-        setToggleSearch(false);
+      if (userSearch.current && userSearchInput.current) {
+        if (
+          !userSearch.current.contains(e.target) &&
+          !userSearchInput.current.contains(e.target)
+        ) {
+          setToggleSearch(false);
+        }
       }
     });
   };
@@ -107,7 +109,7 @@ const Header = () => {
                   </NavLink>
                 ) : (
                   <NavLink
-                    to="/profile"
+                    to={`/profile`}
                     style={{ textDecoration: "none" }}
                     className={classes.disableLink}
                     activeClassName={classes.activeLink}

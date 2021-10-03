@@ -101,3 +101,9 @@
     display: none;
   }
 }
+
+@media screen and (max-width: 420px) {
+  .searchBar {
+    width: 120px;
+  }
+}
