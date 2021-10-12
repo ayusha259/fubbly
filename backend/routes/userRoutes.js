@@ -97,12 +97,6 @@ route.put(
   async (req, res, next) => {
     try {
       const user_id = req.user;
-      // // await User.findByIdAndUpdate(user_id, {
-      // //   profilePicture:
-      // //     del || req.file.path === ""
-      // //       ? "https://st4.depositphotos.com/4329009/19956/v/600/depositphotos_199564354-stock-illustration-creative-vector-illustration-default-avatar.jpg"
-      // //       : ,
-      // // });
       const uploaded = await cloudinary.uploader.upload(req.file.path, {
         public_id: `${user_id}-${req.file.filename}`,
         folder: user_id,

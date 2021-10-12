@@ -114,7 +114,7 @@ route.put("/like/:id", auth, async (req, res, next) => {
 route.put("/comment/:id", auth, async (req, res, next) => {
   try {
     const user_id = req.user;
-    const { comment, name, profilePicture } = req.body;
+    const { comment } = req.body;
     const post = await Post.findById(req.params.id);
     const newComment = await Comment.create({
       user: user_id,
