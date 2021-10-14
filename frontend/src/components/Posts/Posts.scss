@@ -1,0 +1,274 @@
+.post {
+  width: 100%;
+  padding: 0 16px 20px 16px;
+  background-color: white;
+  border-radius: 33px;
+  border: 1px solid #f0f6fd;
+  .post-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+    .post-user-info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      // background-color: aquamarine;
+      span {
+        margin-left: 7px;
+      }
+    }
+    .mui-icon {
+      color: #9c9c9c;
+    }
+  }
+  .post-image {
+    img {
+      width: 100%;
+      border-radius: 17px;
+    }
+  }
+  .post-interact {
+    width: 100%;
+    padding: 0 10px;
+    .likes-cmts {
+      width: 18%;
+      display: flex;
+      justify-content: space-between;
+      .interact-icons {
+        font-size: 1.45rem;
+      }
+    }
+  }
+  .liked-information {
+    font-size: 0.8rem;
+    padding: 5px 0;
+    span {
+      font-weight: 500;
+    }
+  }
+  .post-caption {
+    i {
+      font-size: 0.6rem;
+    }
+    span {
+      font-size: 0.85rem;
+      font-weight: 400;
+    }
+  }
+  #createdAt {
+    font-size: 0.67rem;
+    color: #888888;
+  }
+}
+
+// .tweetbox {
+//   height: 750px;
+//   width: 590px;
+//   display: flex;
+//   flex-direction: column;
+
+//   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+//   margin-bottom: 50px;
+// }
+
+// .tweetbox_user {
+//   height: 8.2%;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
+
+//   padding: 4px 10px;
+// }
+
+// .tweetbox_user > .mui_icon {
+//   margin-right: 7px;
+// }
+
+// .tweetbox_user_inf {
+//   padding: 4px 0;
+//   display: flex;
+//   align-items: center;
+// }
+
+// .tweetbox_user_inf > span {
+//   font-size: 0.9rem;
+//   font-weight: 500;
+//   margin-left: 12px;
+// }
+
+// .mainBody {
+//   height: 74.1%;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   text-align: left;
+//   border-bottom: 1px solid #d3d3d3;
+// }
+
+// .bodyImage {
+//   height: 100%;
+//   width: 100%;
+// }
+
+// .bodyImage > img {
+//   width: 100%;
+//   height: 100%;
+//   object-fit: contain;
+// }
+/* .fullImage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.548);
+  z-index: 100;
+}
+.fullImage > img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  max-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  object-fit: contain;
+  padding: 30px;
+} */
+
+// .postContent {
+//   height: 17.7%;
+// }
+
+// .tweetbox_likes {
+//   padding: 10px 0;
+//   display: flex;
+//   height: 20%;
+//   justify-content: space-evenly;
+// }
+
+// .tweetbox_likes > span > .mui_icon {
+//   color: #8698a4;
+//   font-size: 1.1rem;
+//   margin-right: 6px;
+// }
+
+// .comment_icon,
+// .retweet_icon,
+// .like_icon {
+//   color: #8698a4;
+//   font-size: 0.8rem;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+// .content {
+//   padding: 0 6px;
+//   font-size: 0.9rem;
+//   height: 20%;
+//   text-align: left;
+// }
+
+// .content > p > span {
+//   font-weight: 500;
+// }
+
+// .push_like {
+//   animation: push 0.3s linear 1;
+// }
+
+// .comment {
+//   overflow: auto;
+//   margin-top: 20px;
+// }
+
+// .cmt_box {
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+//   padding: 10px 5px;
+//   border-top: 1px solid #d3d3d3;
+// }
+
+// .cmt_input {
+//   flex: 1;
+//   border: none;
+//   font-size: 1rem;
+//   padding: 0 5px;
+//   border: none;
+//   outline: none;
+//   background: transparent;
+// }
+
+// .cmt_btn {
+//   padding: 4px 6px;
+//   font-size: 0.9rem;
+//   border: none;
+//   font-weight: 500;
+//   background-color: transparent;
+//   color: #b2dffc;
+// }
+
+// .cmt_btn_active {
+//   color: #0095f6;
+// }
+
+// .cmt_btn_active:hover {
+//   cursor: pointer;
+// }
+
+// .all_cmt {
+//   height: 600px;
+//   width: 600px;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+// }
+
+// .cmt {
+//   width: 100%;
+//   padding: 10px 6px;
+//   border-bottom: 1px solid #d3d3d3;
+//   display: flex;
+//   align-items: center;
+// }
+
+// .cmt > span:nth-of-type(1) {
+//   font-size: 0.8rem;
+//   font-weight: 500;
+// }
+
+// .cmt > span:nth-of-type(2) {
+//   margin-left: 20px;
+//   font-size: 1rem;
+// }
+
+// .cmtPreview {
+//   width: 100%;
+//   padding: 5px 6px;
+//   display: flex;
+//   align-items: center;
+// }
+
+// @keyframes push {
+//   50% {
+//     transform: scale(0.8);
+//   }
+// }
+
+// @media all and (max-width: 520px) {
+//   .tweetbox {
+//     width: 100%;
+//     height: 550px;
+//   }
+//   .cmtPreview {
+//     padding: 1px 6px;
+//   }
+//   .cmt_box {
+//     padding: 7px 5px;
+//   }
+// }

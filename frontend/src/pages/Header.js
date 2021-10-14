@@ -6,7 +6,7 @@ import { Link, NavLink } from "react-router-dom";
 // import Snackbar from "@material-ui/core/Snackbar";
 
 import classes from "./Header.module.css";
-import UserSearch from "./extras/UserSearch";
+import UserSearch from "../components/UserSearch/UserSearch";
 
 const Header = () => {
   // const [logoutPop, setLogoutPop] = useState(false);
@@ -68,7 +68,7 @@ const Header = () => {
         <div className={classes.navContainer}>
           <h2 className={classes.brand}>
             <Link to="/" style={{ textDecoration: "none", color: "#ebe8e8" }}>
-              FACEPAGE
+              Fubbly
             </Link>
           </h2>
           {isLoggedIn ? (

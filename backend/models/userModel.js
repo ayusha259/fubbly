@@ -29,13 +29,13 @@ const userSchema = mongoose.Schema(
         type: String,
         required: true,
         default:
-          "https://res.cloudinary.com/social-mern/image/upload/v1633171722/depositphotos_199564354-stock-illustration-creative-vector-illustration-default-avatar_tlkm1m.jpg",
+          "https://res.cloudinary.com/social-mern/image/upload/v1634116067/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392_qws903.jpg",
       },
       public_id: {
         type: String,
         required: true,
         default:
-          "depositphotos_199564354-stock-illustration-creative-vector-illustration-default-avatar_tlkm1m",
+          "default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392_qws903",
       },
     },
     posts: [

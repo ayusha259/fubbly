@@ -1,0 +1,113 @@
+.loginContainer {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  .imgContainer {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    background-color: black;
+    overflow: hidden;
+
+    @media screen and (max-width: 767px) {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+
+      @media screen and (max-width: 767px) {
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .login-content-container {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    // background-image: url("https://static.rfstat.com/renderforest/images/logo_maker_images/logo-maker-process/hero-right-wave.svg");
+    // background-position: bottom;
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    // svg {
+    //   position: absolute;
+    //   bottom: 0;
+    //   left: 0;
+    //   z-index: -10;
+    // }
+    @media screen and (max-width: 767px) {
+      width: 100%;
+      align-items: flex-end;
+      // svg {
+      //   display: none;
+      // }
+    }
+  }
+}
+
+/* .main {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+
+.heading {
+  font-size: 5rem;
+  margin-top: 40px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.formContainer {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.textField {
+  width: 350px;
+}
+
+.standardBtn {
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  margin-bottom: 13px;
+  outline: none;
+  border: none;
+  color: white;
+  background-color: #1a1a1a;
+}
+
+.error {
+  width: 350px;
+  padding: 10px;
+  background-color: #f8d7da;
+  color: #722d47;
+  margin: auto;
+  margin-bottom: 20px;
+} */

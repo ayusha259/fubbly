@@ -1,24 +1,26 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import ProtectedRoute from "./ProtectedRoute";
-import Header from "./components/Header";
-import HomePage from "./components/HomePage";
-import LoginPage from "./components/LoginPage";
+import Header from "./pages/Header";
+import HomePage from "./pages/HomePage/HomePage";
+import LoginPage from "./pages/Login/LoginPage";
 
-import RegisterPage from "./components/RegisterPage";
-import ProfilePage from "./components/ProfilePage";
+// import RegisterPage from "./pages/RegisterPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import "./App.css";
 
 function App() {
+  const location = useLocation();
   return (
     <div className="App">
-      <Header />
-      <Switch>
-        <ProtectedRoute exact path="/" component={HomePage} />
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/register" component={RegisterPage} />
-        <ProtectedRoute exact path="/profile" component={ProfilePage} />
-      </Switch>
+      <AnimatePresence exitBeforeEnter>
+        <Switch key={location.key} location={location}>
+          <ProtectedRoute exact path="/" component={HomePage} />
+          <Route path="/login" component={LoginPage} />
+          {/* <ProtectedRoute exact path="/profile" component={ProfilePage} /> */}
+        </Switch>
+      </AnimatePresence>
     </div>
   );
 }

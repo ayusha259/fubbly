@@ -16,7 +16,7 @@ dotenv.config();
 connectDb();
 
 const app = express();
-console.log(path.join(__dirname, "../frontend", "build"));
+
 app.use(express.json());
 app.use("/uploads", express.static("./backend/uploads"));
 

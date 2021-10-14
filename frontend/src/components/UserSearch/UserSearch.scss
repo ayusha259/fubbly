@@ -1,0 +1,51 @@
+.usersSearch {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  height: 300px;
+  width: 400px;
+  background-color: white;
+  border-radius: 7px;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
+  z-index: 20;
+  .user {
+    border-bottom: 1px solid #d3d3d3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 10px;
+    .name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: black;
+    }
+  }
+}
+.noUsers {
+  padding: 15px;
+  text-align: center;
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 
+
+
+
+.followUnfollow {
+  margin-left: 10px;
+}
+
+
+
+@media screen and (max-width: 420px) {
+  .usersSearch {
+    width: 100vw;
+    left: -131%;
+  }
+} */

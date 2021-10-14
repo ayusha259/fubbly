@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
-import { getUserPosts, uploadImage } from "../actions/userAction";
-import Loader from "./extras/Loader";
-import Posts from "./extras/Posts";
+import { getUserPosts, uploadImage } from "../../actions/userAction";
+import Loader from "../../components/Loader/Loader";
+import Posts from "../../components/Posts/Posts";
 import classes from "./ProfilePage.module.css";
 import axios from "axios";
 

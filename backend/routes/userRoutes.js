@@ -53,7 +53,7 @@ route.post("/login", async (req, res, next) => {
 route.get("/auth/userData", auth, async (req, res, next) => {
   try {
     const user_id = req.user;
-    const user = await User.findById(user_id).select("-password -email -posts");
+    const user = await User.findById(user_id).select("-password -email");
     if (user) {
       res.status(200).json(user);
     } else {
@@ -72,6 +72,20 @@ route.get("/allusers", async (req, res, next) => {
     );
     res.status(200).json(allUsers);
   } catch (error) {
+    next(error);
+  }
+});
+
+route.get("/search", async (req, res, next) => {
+  try {
+    const { search } = req.query;
+    const regex = { $regex: ".*" + search + ".*", $options: "i" };
+    const searchedUsers = await User.find({
+      $or: [{ name: regex }, { username: regex }],
+    }).select("username name profilePicture");
+    res.status(200).json(searchedUsers);
+  } catch (error) {
+    res.status(500);
     next(error);
   }
 });
@@ -113,7 +127,6 @@ route.put(
       await cloudinary.uploader.destroy(oldDp.public_id);
       fs.unlinkSync(req.file.path);
       res.status(200).json({
-        old: oldDp,
         message: "Uploaded Successfully",
       });
       // res.status(200).send(user_id);

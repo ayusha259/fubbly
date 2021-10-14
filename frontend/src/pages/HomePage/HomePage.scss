@@ -1,0 +1,123 @@
+.home-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  position: relative;
+  .home-bar {
+    // position: fixed;
+    width: 5%;
+  }
+}
+
+// .container {
+//   width: 80%;
+//   margin: auto;
+//   margin-top: 20px;
+//   min-height: 90vh;
+// }
+
+// .feedContainer {
+//   display: flex;
+// }
+
+// .feed {
+//   width: 70%;
+//   padding: 10px;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// }
+
+// .users {
+//   width: 30%;
+//   display: flex;
+//   padding: 0 10px;
+//   flex-direction: column;
+// }
+
+// .users > h1 {
+//   padding: 10px;
+// }
+
+// .name {
+//   font-size: 0.9rem;
+//   font-weight: 500;
+// }
+
+// .user {
+//   border-bottom: 1px solid #d3d3d3;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   padding: 15px 10px;
+// }
+
+// .followUnfollow {
+//   margin-left: 10px;
+// }
+
+// .postAddBtn:hover {
+//   transform: scale(1.5);
+// }
+
+// .uploadImage {
+//   height: 600px;
+//   width: 600px;
+//   display: flex;
+//   flex-direction: column;
+//   padding: 10px;
+//   text-align: center;
+// }
+
+// .dialogImage {
+//   padding: 20px;
+//   height: 65%;
+//   text-align: center;
+// }
+
+// .dialogImage > img {
+//   max-height: 100%;
+//   max-width: 100%;
+//   object-fit: contain;
+// }
+
+// .uploadImageIcon {
+//   font-size: 1.3rem;
+//   color: #0a6ed1;
+//   margin-top: 8px;
+// }
+
+// .uploadImageIcon:hover {
+//   cursor: pointer;
+// }
+
+// @media all and (max-width: 520px) {
+//   .container {
+//     /* background-color: black; */
+//     width: 100%;
+//   }
+
+//   .feedContainer {
+//     display: block;
+//   }
+
+//   .feed {
+//     width: 100%;
+//     padding: 0;
+//     align-items: center;
+//   }
+
+//   .users {
+//     display: none;
+//   }
+//   .uploadImage {
+//     width: 100%;
+//     height: 400px;
+//   }
+//   .dialogImage {
+//     padding: 0;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//   }
+// }

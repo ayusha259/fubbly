@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Avatar, Dialog } from "@material-ui/core";
 import MoreHorizOutlinedIcon from "@material-ui/icons/MoreHorizOutlined";
-import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import axios from "axios";
 
 import { useSelector } from "react-redux";
 
-import classes from "./Posts.module.css";
+import "./Posts.scss";
+import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline";
 const Posts = (props) => {
   const {
     username,
@@ -19,14 +19,15 @@ const Posts = (props) => {
     comments,
     liked,
     _id,
-    postComment,
+    // postComment,
     created,
   } = props;
   const [dialog, setDialog] = useState(false);
   const [modal, setModal] = useState(false);
   const [like, setLike] = useState(liked);
+  const [likedUsers, setLikedUsers] = useState(likes);
   const [cmt, setCmt] = useState("");
-  const [noOfLikes, setNoOfLikes] = useState(likes);
+  // const [noOfLikes, setNoOfLikes] = useState(likes.length);
   // const [stateComments, setStateComments] = useState(comments);
   // const [noOfCmt, setNoOfCmt] = useState(comments.length);
 
@@ -71,8 +72,17 @@ const Posts = (props) => {
     );
   };
 
+  const readMoreCaption = (caption) => {
+    let array = caption.split(" ");
+    if (array.length > 5) {
+      array = array.slice(0, 5);
+      return `${array.join(" ")} ...(more)`;
+    }
+    return array.join(" ");
+  };
+
   const postCommentHandler = (id, comment) => {
-    postComment(id, comment);
+    // postComment(id, comment);
     setCmt("");
     // setNoOfCmt(noOfCmt + 1);
     // setStateComments((old) => [
@@ -89,67 +99,77 @@ const Posts = (props) => {
     setDialog(false);
   };
 
-  const handleLike = (type) => {
+  const handleLike = () => {
+    const type = like ? "unlike" : "like";
     likeRequest();
     setLike(!like);
+
     if (type === "like") {
-      setNoOfLikes(noOfLikes + 1);
+      setLikedUsers((state) => [...state, { username: user.username }]);
     } else {
-      setNoOfLikes(noOfLikes - 1);
+      setLikedUsers((state) =>
+        state.filter((s) => s.username !== user.username)
+      );
     }
-    document
-      .querySelector("#like_icon")
-      .classList.toggle(`${classes.push_like}`);
+    // document
+    //   .querySelector("#like_icon")
+    //   .classList.toggle(`${classes.push_like}`);
   };
 
   return (
     <>
-      {/* <div className="post">
-        <div className="post-header">
-          <div className="post-headerLeft">
-            <Avatar src={profile} style={{ height: 40, width: 40 }} />
-            <span>{name}</span>
+      <div className="post">
+        <div className="post-head">
+          <div className="post-user-info">
+            <Avatar style={{ width: "37px", height: "37px" }} src={profile} />
+            <span>{username}</span>
           </div>
-          <MoreHorizIcon />
-          <div></div>
+          <MoreHorizOutlinedIcon className="mui-icon" />
         </div>
-        <div className="post-body">
-          <img className="post-body-image" src={image} alt="test" />
+        <div className="post-image">
+          <img src={image.url} alt="" />
         </div>
-        <div className="post-details">
-          <div className="post-details-caption">
-            <span>{name} : </span>
-            <p>{content}</p>
-          </div>
-          <div className="post-details-comments">
-            {stateComments.map((comment) => (
-              <div className="comment">
-                <span>{comment.username}</span>
-                <span>{comment.comment}</span>
-              </div>
-            ))}
-          </div>
-          <div className="post-body-comment">
-            <input
-              onChange={this.handleChange}
-              value={this.state.input}
-              type="text"
-              placeholder="Add a comment..."
+        <div className="post-interact">
+          <div className="likes-cmts">
+            <FavoriteIcon
+              onClick={handleLike}
+              style={{ color: !like ? "#e4e5eb" : "#FC1550" }}
+              className="interact-icons"
             />
-            <span
-              onClick={
-                this.state.input.length > 0 ? this.handleCommentSubmit : ""
-              }
-              style={{
-                color: this.state.input.length > 0 ? "#0798F6" : "#B5E0FD",
-              }}
-            >
-              Post
-            </span>
+            <ChatBubbleIcon
+              style={{ color: "#e4e5eb" }}
+              className="interact-icons"
+            />
           </div>
         </div>
-      </div> */}
-      <Dialog onClose={handleDialogClose} open={dialog}>
+        <div className="liked-information">
+          Liked by{" "}
+          {likedUsers.length > 0 ? (
+            <span>
+              {likedUsers[likedUsers.length - 1].username}{" "}
+              {likedUsers.length > 1
+                ? `and ${likedUsers.length - 1} others`
+                : ""}
+            </span>
+          ) : (
+            <span>...</span>
+          )}
+        </div>
+        <div className="post-caption">
+          <i class="fas fa-quote-left"></i>{" "}
+          <span>{readMoreCaption(content)}</span>
+        </div>
+        <span id="createdAt">{timeSince(created)}</span>
+      </div>
+    </>
+  );
+};
+
+export default Posts;
+
+// eslint-disable-next-line no-lone-blocks
+{
+  /* <Dialog onClose={handleDialogClose} open={dialog}>
         <div className={classes.all_cmt}>
           <div>
             {comments.map((comment) => (
@@ -289,9 +309,5 @@ const Posts = (props) => {
             </button>
           </form>
         </div>
-      </div>
-    </>
-  );
-};
-
-export default Posts;
+      </div> */
+}

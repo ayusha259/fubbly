@@ -62,6 +62,7 @@ route.get("/followingposts", auth, async (req, res, next) => {
         .where("user")
         .in(user.following)
         .sort("-createdAt")
+        .populate("user", "username profilePicture")
         .populate({
           path: "comments",
           populate: { path: "user", select: "username profilePicture" },
