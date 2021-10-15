@@ -20,30 +20,34 @@ const Navbar = () => {
     });
   };
   return (
-    <div className="navbar">
-      <div className="navbar-container">
-        <span id="brand">Fubbly</span>
-        <div className="searchBar">
-          <i className="fas fa-search"></i>
-          <input
-            placeholder="Search"
-            id="input-box"
-            ref={userSearchInput}
-            type="text"
-            value={search}
-            onFocus={handleMenu}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          {toggleSearch ? (
-            <div ref={userSearch}>
-              <UserSearch search={search} />
-            </div>
-          ) : (
-            ""
-          )}
+    <>
+      <div className="fake-nav"></div>
+      <div className="navbar">
+        <div className="fake-nav"></div>
+        <div className="navbar-container">
+          <span id="brand">Fubbly.</span>
+          <div className="searchBar">
+            <i className="fas fa-search"></i>
+            <input
+              placeholder="Search"
+              id="input-box"
+              ref={userSearchInput}
+              type="text"
+              value={search}
+              onFocus={handleMenu}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {toggleSearch ? (
+              <div ref={userSearch}>
+                <UserSearch search={search} />
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

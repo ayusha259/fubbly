@@ -6,6 +6,10 @@
   .home-bar {
     // position: fixed;
     width: 5%;
+    border-right: 2px solid #f2f3f7;
+    @media screen and (max-width: 400px) {
+      display: none;
+    }
   }
 }
 

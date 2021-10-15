@@ -4,8 +4,14 @@
   right: 0;
   height: 100vh;
   width: 24%;
-  padding: 34px 14px;
+  padding: 34px 17px;
   border-left: 2px solid #f2f3f7;
+  @media screen and (max-width: 1050px) {
+    width: 30%;
+  }
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
   .user-content {
     width: 100%;
     height: 100%;
@@ -15,7 +21,6 @@
     .userInfo-head {
       display: flex;
       flex-direction: column;
-      height: 33%;
       width: 100%;
       justify-content: center;
       align-items: center;
@@ -70,9 +75,9 @@
     }
     .userInfo-followings {
       width: 100%;
-      height: 10%;
       display: flex;
-      margin-top: 10px;
+      margin-top: 20px;
+      padding: 10px 0;
       div {
         display: flex;
         flex-direction: column;

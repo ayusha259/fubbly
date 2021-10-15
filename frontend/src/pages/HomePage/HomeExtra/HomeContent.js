@@ -17,11 +17,19 @@ const HomeContent = () => {
       dispatch({ type: "CLEAN_FOLLOWING_POSTS" });
     };
   }, [dispatch, auth.token]);
+  const breakpointColumnsObj = {
+    default: 3,
+    1050: 2,
+    750: 1,
+  };
 
   return (
     <div className="homecontent-container">
       <Navbar />
-      <Masonry breakpointCols={3} className="home-posts-container">
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="home-posts-container"
+      >
         {followingPosts.map((post) => (
           <div className="ind-posts-container">
             <Posts

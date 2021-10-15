@@ -8,6 +8,10 @@
   border-radius: 7px;
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
   z-index: 20;
+  @media screen and (max-width: 400px) {
+    right: -20px;
+    width: 100vw;
+  }
   .user {
     border-bottom: 1px solid #d3d3d3;
     display: flex;

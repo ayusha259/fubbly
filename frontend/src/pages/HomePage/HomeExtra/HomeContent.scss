@@ -1,6 +1,12 @@
 .homecontent-container {
   width: 71%;
   min-height: 100vh;
+  @media screen and (max-width: 1050px) {
+    width: 65%;
+  }
+  @media screen and (max-width: 900px) {
+    flex: 1;
+  }
   .home-posts-container {
     min-height: 100%;
     width: 100%;
@@ -11,6 +17,9 @@
     .ind-posts-container {
       width: 100%;
       padding: 15px;
+      @media screen and (max-width: 400px) {
+        padding: 9px;
+      }
     }
   }
 }
