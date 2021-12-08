@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Power3 } from "gsap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { userLogin } from "../../../actions/userAction";
 import "./LoginComponent.scss";
 const LoginComponent = () => {
@@ -11,7 +11,6 @@ const LoginComponent = () => {
   const [showPass, setShowPass] = useState(false);
   const [showLink, setShowLink] = useState(false);
   const { error } = useSelector((state) => state.error);
-  const { url } = useRouteMatch();
   const dispatch = useDispatch();
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -70,7 +69,7 @@ const LoginComponent = () => {
             <Link
               onClick={() => setShowLink(false)}
               style={{ textDecoration: "none" }}
-              to={`${url}/register`}
+              to="/login/register"
             >
               Sign In
             </Link>

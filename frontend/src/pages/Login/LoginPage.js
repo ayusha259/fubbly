@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Route } from "react-router-dom";
+import { useNavigate, Route, Routes } from "react-router-dom";
 import LoginComponent from "./LoginComponent/LoginComponent";
 import RegisterComponent from "./RegisterComponent/RegisterComponent";
 import "./LoginPage.scss";
@@ -8,14 +8,14 @@ import "./LoginPage.scss";
 const LoginPage = () => {
   const { user } = useSelector((state) => state.userInfo);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
-      history.push("/");
+      navigate("/");
     }
     return () => dispatch({ type: "CLEAN_ERROR" });
-  }, [user, history, dispatch]);
+  }, [user, navigate, dispatch]);
   return (
     <>
       <div className="loginContainer">
@@ -26,13 +26,10 @@ const LoginPage = () => {
           />
         </div>
         <div className="login-content-container">
-          <Route key={1} path="/login" exact component={LoginComponent} />
-          <Route
-            key={2}
-            path="/login/register"
-            exact
-            component={RegisterComponent}
-          />
+          <Routes key="login-page-elements">
+            <Route path="/" element={<LoginComponent />} />
+            <Route path="/register" element={<RegisterComponent />} />
+          </Routes>
         </div>
       </div>
     </>

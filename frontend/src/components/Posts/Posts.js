@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Avatar, Dialog } from "@material-ui/core";
 import MoreHorizOutlinedIcon from "@material-ui/icons/MoreHorizOutlined";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
@@ -120,13 +121,18 @@ const Posts = (props) => {
     <>
       <div className="post">
         <div className="post-head">
-          <div className="post-user-info">
-            <Avatar style={{ width: "37px", height: "37px" }} src={profile} />
-            <span>{username}</span>
-          </div>
+          <Link
+            style={{ textDecoration: "none", color: "black" }}
+            to={`./profile/${username}`}
+          >
+            <div className="post-user-info">
+              <Avatar style={{ width: "37px", height: "37px" }} src={profile} />
+              <span>{username}</span>
+            </div>
+          </Link>
           <MoreHorizOutlinedIcon className="mui-icon" />
         </div>
-        <div className="post-image">
+        <div onDoubleClick={handleLike} className="post-image">
           <img src={image.url} alt="" />
         </div>
         <div className="post-interact">

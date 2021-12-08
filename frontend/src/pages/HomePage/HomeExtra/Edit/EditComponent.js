@@ -54,7 +54,7 @@ const EditComponent = ({ closeHandle }) => {
         />
         <div>
           <Button
-            style={{ width: "100px" }}
+            style={{ width: "100px", marginTop: "20px" }}
             variant="contained"
             s
             color="primary"

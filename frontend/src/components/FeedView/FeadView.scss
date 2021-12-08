@@ -1,0 +1,28 @@
+.home-posts-container {
+  min-height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  // background-color: #fbfbfd;
+  background-color: #f8fafb;
+  .ind-posts-container {
+    width: 100%;
+    padding: 15px;
+    @media screen and (max-width: 400px) {
+      padding: 9px;
+    }
+  }
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.grid-item {
+  width: 200px;
+}

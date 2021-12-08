@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { userRegister } from "../../../actions/userAction";
 import { Power3 } from "gsap";
@@ -17,7 +17,7 @@ const RegisterComponent = () => {
   const { user } = useSelector((state) => state.userInfo);
   const { error } = useSelector((state) => state.error);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -33,17 +33,17 @@ const RegisterComponent = () => {
 
   useEffect(() => {
     if (user) {
-      history.push("/");
+      navigate("/");
     }
     return () => dispatch({ type: "CLEAN_ERROR" });
-  }, [user, history, dispatch]);
+  }, [user, navigate, dispatch]);
 
   return (
     <motion.div
+      key="register--component"
       onAnimationComplete={() => setShowLink(true)}
       initial={{ opacity: 0, y: 80 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 80 }}
       transition={{ duration: 1, ease: Power3.easeInOut }}
       className="register-content"
     >

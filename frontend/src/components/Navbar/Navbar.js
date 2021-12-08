@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import UserSearch from "../UserSearch/UserSearch";
+import { Link } from "react-router-dom";
 import "./Navbar.scss";
 const Navbar = () => {
   const [search, setSearch] = useState("");
@@ -25,7 +26,9 @@ const Navbar = () => {
       <div className="navbar">
         <div className="fake-nav"></div>
         <div className="navbar-container">
-          <span id="brand">Fubbly.</span>
+          <Link style={{ textDecoration: "none", color: "black" }} to="/home">
+            <span id="brand">Fubbly.</span>
+          </Link>
           <div className="searchBar">
             <i className="fas fa-search"></i>
             <input
@@ -39,7 +42,10 @@ const Navbar = () => {
             />
             {toggleSearch ? (
               <div ref={userSearch}>
-                <UserSearch search={search} />
+                <UserSearch
+                  handleClose={() => setToggleSearch(false)}
+                  search={search}
+                />
               </div>
             ) : (
               ""

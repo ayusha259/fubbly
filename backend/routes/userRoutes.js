@@ -90,9 +90,11 @@ route.get("/search", async (req, res, next) => {
   }
 });
 
-route.get("/:id", async (req, res, next) => {
+route.get("/:username", async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id).select("-password -email");
+    const user = await User.findOne({ username: req.params.username })
+      .select("-password -email")
+      .populate({ path: "posts", options: { sort: { createdAt: -1 } } });
     if (user) {
       res.status(200);
       res.json(user);
@@ -141,6 +143,10 @@ route.put("/follow", auth, async (req, res, next) => {
   try {
     const user_id = req.user;
     const { targetId } = req.body;
+    if (user_id === targetId) {
+      res.status(400);
+      throw new Error("Cant follow yourself");
+    }
     await User.findByIdAndUpdate(user_id, {
       $push: { following: targetId },
     });
@@ -158,6 +164,10 @@ route.put("/unfollow", auth, async (req, res, next) => {
   try {
     const user_id = req.user;
     const { targetId } = req.body;
+    if (user_id === targetId) {
+      res.status(400);
+      throw new Error("Cant unfollow yourself");
+    }
     await User.findByIdAndUpdate(user_id, {
       $pull: { following: targetId },
     });
