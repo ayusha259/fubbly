@@ -20,6 +20,9 @@ import "./HomePage.scss";
 import axios from "axios";
 import HomeContent from "./HomeExtra/HomeContent";
 import UserPage from "../UserPage/UserPage";
+import BottomBar from "../../components/BottomBar/BottomBar";
+import SearchPage from "../SearchPage/SearchPage";
+import AddPost from "../AddPostPage/AddPost";
 
 const HomePage = () => {
   const { user, auth } = useSelector((state) => state.userInfo);
@@ -96,11 +99,15 @@ const HomePage = () => {
 
   return (
     <div className="home-container">
-      <div className="home-bar"></div>
-      <Routes>
-        <Route path="" element={<HomeContent />} />
-        <Route path="profile/:username" element={<UserPage />} />
-      </Routes>
+      <div className="home--elements">
+        <Routes>
+          <Route path="" element={<HomeContent />} />
+          <Route path="profile/:username" element={<UserPage />} />
+          <Route path="search" element={<SearchPage />} />
+          <Route path="post" element={<AddPost />} />
+        </Routes>
+        <BottomBar />
+      </div>
       <UserComponent />
     </div>
   );

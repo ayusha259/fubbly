@@ -27,7 +27,6 @@ const UserSearch = ({ search, handleClose }) => {
   const handleFollowUnfollow = (req, tok, id) => {
     dispatch(followUnfollow(req, tok, id));
   };
-  console.log(foundUsers);
   return (
     <div className="usersSearch">
       {foundUsers ? (

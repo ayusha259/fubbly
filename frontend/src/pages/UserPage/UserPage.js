@@ -7,7 +7,7 @@ import "./UserPage.scss";
 const UserPage = () => {
   return (
     <div className="userpage-container">
-      <Navbar />
+      <Navbar showSearch={true} />
       <UserComponent />
     </div>
   );

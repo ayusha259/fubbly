@@ -1,21 +1,16 @@
 import { Button } from "@material-ui/core";
-import { motion } from "framer-motion";
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadPost } from "../../../../actions/userAction";
+import { uploadPost } from "../../actions/userAction";
+import Navbar from "../../components/Navbar/Navbar";
 
-import "./PostForm.scss";
+import "./AddPost.scss";
 
-const PostForm = ({ closeHandle }) => {
+const AddPost = () => {
   const [image, setImage] = useState();
   const [imageUrl, setImageUrl] = useState("");
   const [content, setContent] = useState("");
-  const closeBtn = useRef(null);
   const { user, auth } = useSelector((state) => state.userInfo);
-  // const handleClose = () => {
-  //     setModel(false);
-  //     setImageUrl("");
-  //   };
   const dispatch = useDispatch();
   const handleFile = (evt) => {
     setImage(evt.target.files[0]);
@@ -26,31 +21,16 @@ const PostForm = ({ closeHandle }) => {
     formData.append("content", content);
     formData.append("image", image);
     dispatch(uploadPost(auth.token, formData));
-    closeHandle();
   };
-  if (closeBtn.current) {
-    closeBtn.current.addEventListener("click", () => {
-      closeBtn.current.classList.add("push-close");
-    });
-  }
   return (
-    <motion.div
-      key="edit"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
-      className="edit-container"
-    >
-      <span onClick={closeHandle} ref={closeBtn} id="close-btn">
-        <i class="fas fa-times"></i>
-      </span>
-      <div className="image-container">
-        {imageUrl ? <img src={imageUrl} alt="" /> : "No image selected"}
-      </div>
+    <>
+      <Navbar showSearch={true} />
+      <div className="addpost-container">
+        <div className="image-container">
+          {imageUrl ? <img src={imageUrl} alt="" /> : "No image selected"}
+        </div>
 
-      <form onSubmit={handleSubmit}>
-        <div className="upload-container">
+        <form className="upload-container" onSubmit={handleSubmit}>
           <input
             name="image"
             onChange={handleFile}
@@ -66,6 +46,7 @@ const PostForm = ({ closeHandle }) => {
             name={content}
             className="postForm-content"
             placeholder="Content"
+            rows={5}
             required
           />
           <div>
@@ -79,10 +60,10 @@ const PostForm = ({ closeHandle }) => {
               Submit
             </Button>
           </div>
-        </div>
-      </form>
-    </motion.div>
+        </form>
+      </div>
+    </>
   );
 };
 
-export default PostForm;
+export default AddPost;

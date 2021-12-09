@@ -1,0 +1,44 @@
+.addpost-container {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media screen and (min-width: 450px) {
+    width: 70%;
+    margin: auto;
+  }
+  .image-container {
+    height: 50%;
+    width: 100%;
+    padding: 10px;
+    background-color: #f8fbff;
+    color: #888888;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+  .upload-container {
+    padding: 20px 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.postForm-content {
+  width: 100%;
+  background-color: #f8fbff;
+  border: none;
+  padding: 10px;
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  resize: none;
+}

@@ -1,8 +1,10 @@
 import React, { useRef, useState } from "react";
 import UserSearch from "../UserSearch/UserSearch";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.scss";
-const Navbar = () => {
+import { useDispatch } from "react-redux";
+import { userLogout } from "../../actions/userAction";
+const Navbar = ({ showSearch }) => {
   const [search, setSearch] = useState("");
   const [toggleSearch, setToggleSearch] = useState(false);
   let userSearch = useRef();
@@ -20,37 +22,47 @@ const Navbar = () => {
       }
     });
   };
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(userLogout());
+  };
+
   return (
     <>
-      <div className="fake-nav"></div>
       <div className="navbar">
-        <div className="fake-nav"></div>
         <div className="navbar-container">
           <Link style={{ textDecoration: "none", color: "black" }} to="/home">
             <span id="brand">Fubbly.</span>
           </Link>
-          <div className="searchBar">
-            <i className="fas fa-search"></i>
-            <input
-              placeholder="Search"
-              id="input-box"
-              ref={userSearchInput}
-              type="text"
-              value={search}
-              onFocus={handleMenu}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            {toggleSearch ? (
-              <div ref={userSearch}>
-                <UserSearch
-                  handleClose={() => setToggleSearch(false)}
-                  search={search}
-                />
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
+          {showSearch ? (
+            <div className="searchBar">
+              <i className="fas fa-search"></i>
+              <input
+                placeholder="Search"
+                id="input-box"
+                ref={userSearchInput}
+                type="text"
+                value={search}
+                onFocus={handleMenu}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              {toggleSearch ? (
+                <div ref={userSearch}>
+                  <UserSearch
+                    handleClose={() => setToggleSearch(false)}
+                    search={search}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+          ) : (
+            ""
+          )}
+          <i onClick={handleLogout} className="fas fa-power-off logoutIcon"></i>
         </div>
       </div>
     </>

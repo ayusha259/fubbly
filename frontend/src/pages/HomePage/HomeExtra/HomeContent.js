@@ -6,7 +6,7 @@ import "./HomeContent.scss";
 const HomeContent = () => {
   return (
     <div className="homecontent-container">
-      <Navbar />
+      <Navbar showSearch={true} />
       <FeadView />
     </div>
   );
