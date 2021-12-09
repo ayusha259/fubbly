@@ -21,7 +21,8 @@ const PostForm = ({ closeHandle }) => {
     setImage(evt.target.files[0]);
     setImageUrl(URL.createObjectURL(evt.target.files[0]));
   };
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     let formData = new FormData();
     formData.append("content", content);
     formData.append("image", image);

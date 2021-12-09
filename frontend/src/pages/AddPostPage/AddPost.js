@@ -1,6 +1,7 @@
 import { Button } from "@material-ui/core";
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { uploadPost } from "../../actions/userAction";
 import Navbar from "../../components/Navbar/Navbar";
 
@@ -16,11 +17,16 @@ const AddPost = () => {
     setImage(evt.target.files[0]);
     setImageUrl(URL.createObjectURL(evt.target.files[0]));
   };
-  const handleSubmit = () => {
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     let formData = new FormData();
     formData.append("content", content);
     formData.append("image", image);
     dispatch(uploadPost(auth.token, formData));
+    navigate("/home");
   };
   return (
     <>
@@ -43,7 +49,7 @@ const AddPost = () => {
           <textarea
             onChange={(e) => setContent(e.target.value)}
             value={content}
-            name={content}
+            name="content"
             className="postForm-content"
             placeholder="Content"
             rows={5}
