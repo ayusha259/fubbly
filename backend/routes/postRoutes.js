@@ -99,6 +99,13 @@ route.put("/like/:id", auth, async (req, res, next) => {
     if (post) {
       if (!post.likes.includes(user_id)) {
         await post.update({ $push: { likes: user_id } });
+        if (user_id !== post["user"]) {
+          await User.findByIdAndUpdate(post["user"], {
+            $push: {
+              notifications: { type: "liked", targetId: user_id, read: false },
+            },
+          });
+        }
       } else {
         await post.update({ $pull: { likes: user_id } });
       }

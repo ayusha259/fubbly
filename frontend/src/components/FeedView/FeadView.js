@@ -25,9 +25,8 @@ const FeadView = () => {
       className="home-posts-container"
     >
       {followingPosts.map((post) => (
-        <div className="ind-posts-container">
+        <div key={post._id} className="ind-posts-container">
           <Posts
-            key={post._id}
             _id={post._id}
             username={post.user.username}
             profile={post.user.profilePicture.url}

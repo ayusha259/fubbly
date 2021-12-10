@@ -1,7 +1,7 @@
 import { Button } from "@material-ui/core";
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { uploadImage } from "../../../../actions/userAction";
 import "./EditComponent.scss";
 
@@ -9,7 +9,7 @@ const EditComponent = ({ closeHandle }) => {
   const [image, setImage] = useState();
   const [imageUrl, setImageUrl] = useState("");
   const closeBtn = useRef(null);
-  const { user, auth } = useSelector((state) => state.userInfo);
+  const { auth } = useSelector((state) => state.userInfo);
   // const handleClose = () => {
   //     setModel(false);
   //     setImageUrl("");
@@ -38,7 +38,7 @@ const EditComponent = ({ closeHandle }) => {
       className="edit-container"
     >
       <span onClick={closeHandle} ref={closeBtn} id="close-btn">
-        <i class="fas fa-times"></i>
+        <i className="fas fa-times"></i>
       </span>
       <div className="image-container">
         {imageUrl ? <img src={imageUrl} alt="" /> : "No image selected"}

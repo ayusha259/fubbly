@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { uploadPost } from "../../actions/userAction";
@@ -11,7 +11,7 @@ const AddPost = () => {
   const [image, setImage] = useState();
   const [imageUrl, setImageUrl] = useState("");
   const [content, setContent] = useState("");
-  const { user, auth } = useSelector((state) => state.userInfo);
+  const { auth } = useSelector((state) => state.userInfo);
   const dispatch = useDispatch();
   const handleFile = (evt) => {
     setImage(evt.target.files[0]);

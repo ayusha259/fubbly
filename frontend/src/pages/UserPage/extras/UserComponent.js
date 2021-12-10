@@ -9,17 +9,23 @@ import Posts from "../../../components/Posts/Posts";
 import { useSelector, useDispatch } from "react-redux";
 import FollowUnfollow from "../../../components/FollowUnfollowBtn/FollowUnfollow";
 import { followUnfollow } from "../../../actions/userAction";
+import FollowersList from "./FollowersList";
 
 const UserComponent = () => {
   const { user: curr_user, auth } = useSelector((state) => state.userInfo);
   const { username } = useParams();
+
   const [user, setUser] = useState(null);
+  const [showFollowers, setShowFollowers] = useState(false);
+  const [followersListType, setFollowersListType] = useState("");
+
   const navigate = useNavigate();
   const breakpointColumnsObj = {
     default: 3,
     1050: 2,
     750: 1,
   };
+
   useEffect(() => {
     axios.get(`/api/users/${username}`).then((res) => {
       setUser(res.data);
@@ -35,8 +41,26 @@ const UserComponent = () => {
     dispatch(followUnfollow(req, tok, id));
   };
 
+  const handleMenu = (type) => {
+    setFollowersListType(type);
+    setShowFollowers(true);
+  };
+
+  // if (showFollowers) {
+  //   document.body.style.overflowY = "no-scroll";
+  // } else {
+  //   document.body.style.overflowY = "auto";
+  // }
+
   return (
     <div>
+      {showFollowers ? (
+        <FollowersList
+          id={user._id}
+          handleClose={() => setShowFollowers(false)}
+          type={followersListType}
+        />
+      ) : null}
       {user ? (
         <div className="usercomp-container">
           <div className="usercomp-header">
@@ -51,11 +75,17 @@ const UserComponent = () => {
                   {user.posts.length}
                   <span>Posts</span>
                 </div>
-                <div id="num-followers">
+                <div
+                  onClick={(e) => handleMenu("followers")}
+                  id="num-followers"
+                >
                   {user.followers.length}
                   <span>Followers</span>
                 </div>
-                <div id="num-followings">
+                <div
+                  onClick={(e) => handleMenu("following")}
+                  id="num-followings"
+                >
                   {user.following.length}
                   <span>Following</span>
                 </div>

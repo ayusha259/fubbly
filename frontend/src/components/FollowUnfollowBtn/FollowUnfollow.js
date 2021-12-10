@@ -7,7 +7,7 @@ const FollowUnfollow = (props) => {
   const [isFollowed, setIsFollowed] = useState(followed);
   const handleFollow = (type, token, targetId) => {
     handleClick(type, token, targetId);
-    setIsFollowed(!isFollowed);
+    setIsFollowed((state) => !state);
   };
   return (
     <div

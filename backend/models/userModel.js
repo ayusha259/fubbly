@@ -52,6 +52,21 @@ const userSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
+    notifications: [
+      {
+        targetId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+        read: {
+          type: Boolean,
+          default: false,
+        },
+        type: {
+          type: String,
+        },
+      },
+    ],
   },
   { timeStamp: true }
 );

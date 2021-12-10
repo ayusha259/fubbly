@@ -44,7 +44,7 @@ const PostForm = ({ closeHandle }) => {
       className="edit-container"
     >
       <span onClick={closeHandle} ref={closeBtn} id="close-btn">
-        <i class="fas fa-times"></i>
+        <i className="fas fa-times"></i>
       </span>
       <div className="image-container">
         {imageUrl ? <img src={imageUrl} alt="" /> : "No image selected"}

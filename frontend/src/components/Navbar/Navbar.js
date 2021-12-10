@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import UserSearch from "../UserSearch/UserSearch";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Navbar.scss";
 import { useDispatch } from "react-redux";
 import { userLogout } from "../../actions/userAction";
@@ -24,7 +24,6 @@ const Navbar = ({ showSearch }) => {
   };
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const handleLogout = () => {
     dispatch(userLogout());
   };

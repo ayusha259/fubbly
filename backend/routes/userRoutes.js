@@ -90,6 +90,38 @@ route.get("/search", async (req, res, next) => {
   }
 });
 
+route.get("/notifications", auth, async (req, res, next) => {
+  try {
+    const user_id = req.user;
+    const user = await User.findById(user_id)
+      .select("notifications")
+      .populate({
+        path: "notifications.targetId",
+        model: "User",
+        select: "username profilePicture",
+        options: { strictPopulate: false },
+      });
+    if (!user) {
+      res.status(404);
+      throw new Error("No user Found");
+    }
+    await User.findByIdAndUpdate(
+      user_id,
+      {
+        $set: { "notifications.$[elem].read": true },
+      },
+      {
+        multi: true,
+        arrayFilters: [{ "elem.read": false }],
+      }
+    );
+    res.status(200).json(user["notifications"]);
+  } catch (error) {
+    res.status(500);
+    next(error);
+  }
+});
+
 route.get("/:username", async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.params.username })
@@ -153,6 +185,11 @@ route.put("/follow", auth, async (req, res, next) => {
     await User.findByIdAndUpdate(targetId, {
       $push: { followers: user_id },
     });
+    await User.findByIdAndUpdate(targetId, {
+      $push: {
+        notifications: { type: "followed", targetId: user_id, read: false },
+      },
+    });
     res.status(200).json("Followed successfully");
   } catch (error) {
     res.status(500);
@@ -175,6 +212,48 @@ route.put("/unfollow", auth, async (req, res, next) => {
       $pull: { followers: user_id },
     });
     res.status(200).json("Unfollowed successfully");
+  } catch (error) {
+    res.status(500);
+    next(error);
+  }
+});
+
+route.get("/followerslist/:id", async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findById(id).populate({
+      path: "followers",
+      model: "User",
+      select: "username name profilePicture",
+      options: { sort: { name: 1 } },
+    });
+    if (!user) {
+      res.status(404);
+      throw new Error("No user Found");
+    }
+    const followers = user["followers"];
+    res.status(200).json(followers);
+  } catch (error) {
+    res.status(500);
+    next(error);
+  }
+});
+
+route.get("/followinglist/:id", async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findById(id).populate({
+      path: "following",
+      model: "User",
+      select: "username name profilePicture",
+      options: { sort: { name: 1 } },
+    });
+    if (!user) {
+      res.status(404);
+      throw new Error("No user Found");
+    }
+    const following = user["following"];
+    res.status(200).json(following);
   } catch (error) {
     res.status(500);
     next(error);

@@ -23,19 +23,12 @@ import UserPage from "../UserPage/UserPage";
 import BottomBar from "../../components/BottomBar/BottomBar";
 import SearchPage from "../SearchPage/SearchPage";
 import AddPost from "../AddPostPage/AddPost";
+import NotificationPage from "../NotificationPage/NotificationPage";
 
 const HomePage = () => {
-  const { user, auth } = useSelector((state) => state.userInfo);
-  const { allUsers } = useSelector((state) => state.users);
-  const { loading } = useSelector((state) => state.error);
-  const { followingPosts } = useSelector((state) => state.posts);
+  const { auth } = useSelector((state) => state.userInfo);
 
   const dispatch = useDispatch();
-
-  const [dialog, setDialog] = useState(false);
-  const [image, setImage] = useState();
-  const [imageUrl, setImageUrl] = useState("");
-  const [content, setContent] = useState("");
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -45,58 +38,6 @@ const HomePage = () => {
     };
   }, [dispatch, auth.token]);
 
-  const handleFollowUnfollow = (req, tok, id) => {
-    dispatch(followUnfollow(req, tok, id));
-  };
-
-  const handleFile = (evt) => {
-    setImage(evt.target.files[0]);
-    setImageUrl(URL.createObjectURL(evt.target.files[0]));
-  };
-
-  const commentRequest = async (id, comment, name, profile) => {
-    await axios.put(
-      `/api/posts/comment/${id}`,
-      { comment: comment, name: name, profilePicture: profile },
-      {
-        headers: {
-          Authorization: `Bearer ${auth.token}`,
-        },
-      }
-    );
-  };
-
-  const postComment = (id, comment, name, profile) => {
-    commentRequest(id, comment, name, profile);
-  };
-
-  const handleClose = () => {
-    setDialog(false);
-    setContent("");
-  };
-
-  const handleSubmit = () => {
-    let formData = new FormData();
-    formData.append("content", content);
-    formData.append("image", image);
-    handleClose();
-    dispatch(uploadPost(auth.token, formData));
-    dispatch(getFollowingPosts(auth.token));
-  };
-
-  const getIndUser = (id) => {
-    const user = allUsers.find((u) => u._id === id);
-    return {
-      name: user.name,
-      username: user.username,
-      profile: user.profilePicture,
-    };
-  };
-
-  let filterdUsers = user
-    ? allUsers.filter((u) => u._id !== user._id)
-    : allUsers;
-
   return (
     <div className="home-container">
       <div className="home--elements">
@@ -105,6 +46,7 @@ const HomePage = () => {
           <Route path="profile/:username" element={<UserPage />} />
           <Route path="search" element={<SearchPage />} />
           <Route path="post" element={<AddPost />} />
+          <Route path="notifications" element={<NotificationPage />} />
         </Routes>
         <BottomBar />
       </div>

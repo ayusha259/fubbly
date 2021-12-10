@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import FollowUnfollow from "../../components/FollowUnfollowBtn/FollowUnfollow";
 import Dots from "../../components/Loader/Dots/Dots";
 import Navbar from "../../components/Navbar/Navbar";
+import { followUnfollow } from "../../actions/userAction";
 import "./SearchPage.scss";
 
 const SearchPage = () => {
@@ -26,9 +27,9 @@ const SearchPage = () => {
   }, [search]);
   const dispatch = useDispatch();
   const handleFollowUnfollow = (req, tok, id) => {
-    dispatch(FollowUnfollow(req, tok, id));
+    dispatch(followUnfollow(req, tok, id));
   };
-  console.log("Render");
+
   return (
     <>
       <Navbar showSearch={false} />

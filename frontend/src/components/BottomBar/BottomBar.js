@@ -9,8 +9,11 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
+import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
+import NotificationsIcon from "@material-ui/icons/Notifications";
 
 import "./BottomBar.scss";
+import { Badge } from "@material-ui/core";
 
 const BottomBar = () => {
   const { user } = useSelector((state) => state.userInfo);
@@ -18,6 +21,13 @@ const BottomBar = () => {
   const home = useMatch("/home");
   const search = useMatch("/home/search");
   const post = useMatch("/home/post");
+  const notification = useMatch("/home/notifications");
+
+  const countNotifications = () => {
+    const arr = user.notifications.filter((n) => !n.read);
+    return arr.length;
+  };
+
   return (
     <>
       {user ? (
@@ -47,6 +57,17 @@ const BottomBar = () => {
                   <AddCircleIcon className="mui--icon" />
                 ) : (
                   <AddCircleOutlineOutlinedIcon className="mui--icon" />
+                )}
+              </div>
+            </Link>
+            <Link to="../home/notifications">
+              <div>
+                {notification ? (
+                  <NotificationsIcon className="mui--icon" />
+                ) : (
+                  <Badge badgeContent={countNotifications()} color="secondary">
+                    <NotificationsNoneIcon className="mui--icon" />
+                  </Badge>
                 )}
               </div>
             </Link>

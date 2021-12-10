@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Dialog } from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 import MoreHorizOutlinedIcon from "@material-ui/icons/MoreHorizOutlined";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -9,7 +9,6 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 import "./Posts.scss";
-import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline";
 const Posts = (props) => {
   const {
     username,
@@ -23,22 +22,20 @@ const Posts = (props) => {
     // postComment,
     created,
   } = props;
-  const [dialog, setDialog] = useState(false);
-  const [modal, setModal] = useState(false);
+  // const [modal, setModal] = useState(false);
   const [like, setLike] = useState(liked);
   const [likedUsers, setLikedUsers] = useState(likes);
   const [cmt, setCmt] = useState("");
-  // const [noOfLikes, setNoOfLikes] = useState(likes.length);
   // const [stateComments, setStateComments] = useState(comments);
   // const [noOfCmt, setNoOfCmt] = useState(comments.length);
 
   const { user, auth } = useSelector((state) => state.userInfo);
 
-  if (modal) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
+  // if (modal) {
+  //   document.body.style.overflow = "hidden";
+  // } else {
+  //   document.body.style.overflow = "auto";
+  // }
 
   function timeSince(date) {
     var seconds = Math.floor((new Date() - date) / 1000);
@@ -82,23 +79,19 @@ const Posts = (props) => {
     return array.join(" ");
   };
 
-  const postCommentHandler = (id, comment) => {
-    // postComment(id, comment);
-    setCmt("");
-    // setNoOfCmt(noOfCmt + 1);
-    // setStateComments((old) => [
-    //   ...old,
-    //   {
-    //     comment: comment,
-    //     user
-    //     _id: Math.random(),
-    //   },
-    // ]);
-  };
-
-  const handleDialogClose = () => {
-    setDialog(false);
-  };
+  // const postCommentHandler = (id, comment) => {
+  // postComment(id, comment);
+  // setCmt("");
+  // setNoOfCmt(noOfCmt + 1);
+  // setStateComments((old) => [
+  //   ...old,
+  //   {
+  //     comment: comment,
+  //     user
+  //     _id: Math.random(),
+  //   },
+  // ]);
+  // };
 
   const handleLike = () => {
     const type = like ? "unlike" : "like";
@@ -112,9 +105,6 @@ const Posts = (props) => {
         state.filter((s) => s.username !== user.username)
       );
     }
-    // document
-    //   .querySelector("#like_icon")
-    //   .classList.toggle(`${classes.push_like}`);
   };
 
   return (
@@ -123,7 +113,7 @@ const Posts = (props) => {
         <div className="post-head">
           <Link
             style={{ textDecoration: "none", color: "black" }}
-            to={`./profile/${username}`}
+            to={`../profile/${username}`}
           >
             <div className="post-user-info">
               <Avatar style={{ width: "37px", height: "37px" }} src={profile} />
@@ -162,7 +152,7 @@ const Posts = (props) => {
           )}
         </div>
         <div className="post-caption">
-          <i class="fas fa-quote-left"></i>{" "}
+          <i className="fas fa-quote-left"></i>{" "}
           <span>{readMoreCaption(content)}</span>
         </div>
         <span id="createdAt">{timeSince(created)}</span>
@@ -172,148 +162,3 @@ const Posts = (props) => {
 };
 
 export default Posts;
-
-// eslint-disable-next-line no-lone-blocks
-{
-  /* <Dialog onClose={handleDialogClose} open={dialog}>
-        <div className={classes.all_cmt}>
-          <div>
-            {comments.map((comment) => (
-              <div key={comment._id} className={classes.cmt}>
-                <Avatar
-                  src={comment.user.profilePicture.url}
-                  style={{ marginRight: "10px" }}
-                />
-                <span>{`${comment.user.username} - `}</span>
-                <span>{comment.comment}</span>
-              </div>
-            ))}
-          </div>
-          <div>
-            <form
-              className={`${classes.cmt_box}`}
-              onSubmit={(e) => {
-                e.preventDefault();
-                postCommentHandler(_id, cmt);
-              }}
-            >
-              <input
-                placeholder="Comment"
-                className={classes.cmt_input}
-                type="text"
-                value={cmt}
-                onChange={(e) => setCmt(e.target.value)}
-              />
-              <button
-                type="submit"
-                disabled={cmt === ""}
-                className={`${classes.cmt_btn} ${
-                  cmt ? classes.cmt_btn_active : ""
-                }`}
-              >
-                POST
-              </button>
-            </form>
-          </div>
-        </div>
-      </Dialog>
-      <div className={classes.tweetbox}>
-        <div className={classes.tweetbox_user}>
-          <div className={classes.tweetbox_user_inf}>
-            <Avatar
-              style={{ width: "40px", height: "40px", margin: "auto" }}
-              src={profile.url}
-            />
-            <span>{username}</span>
-          </div>
-          <MoreHorizOutlinedIcon className={classes.mui_icon} />
-        </div>
-        <div className={classes.mainBody}>
-          {image ? (
-            <div onClick={() => setModal(true)} className={classes.bodyImage}>
-              <img src={image.url} alt="" />
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
-        <div className={classes.postContent}>
-          <div className={classes.tweetbox_likes}>
-            <span className={classes.like_icon}>
-              {like ? (
-                <FavoriteIcon
-                  id="like_icon"
-                  onClick={() => handleLike("dislike")}
-                  style={{ color: "#ea442b" }}
-                  className={classes.mui_icon}
-                />
-              ) : (
-                <FavoriteBorderIcon
-                  id="like_icon"
-                  onClick={() => handleLike("like")}
-                  className={classes.mui_icon}
-                />
-              )}
-              {noOfLikes}
-            </span>
-            <span className={classes.comment_icon}>
-              <ChatBubbleOutlineIcon
-                onClick={() => setDialog(true)}
-                className={classes.mui_icon}
-              />{" "}
-              {comments.length}
-            </span>
-          </div>
-          <div className={classes.content}>
-            <p>
-              <span>{user.username} - </span>
-              {content}
-            </p>
-            <span
-              style={{
-                fontSize: "0.65rem",
-                color: "#414a4c",
-              }}
-            >
-              {timeSince(created)}
-            </span>
-          </div>
-          <div className={classes.comment}>
-            {comments.slice(-2).map((comment) => (
-              <div key={comment._id} className={classes.cmtPreview}>
-                <span style={{ fontSize: "0.8rem", fontWeight: "500" }}>
-                  {`${comment.user.username} -  `}
-                </span>
-                <span style={{ fontSize: "0.8rem" }}>{comment.comment}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div>
-          <form
-            className={classes.cmt_box}
-            onSubmit={(e) => {
-              e.preventDefault();
-              postCommentHandler(_id, cmt);
-            }}
-          >
-            <input
-              placeholder="Comment"
-              className={classes.cmt_input}
-              type="text"
-              value={dialog ? "" : cmt}
-              onChange={(e) => setCmt(e.target.value)}
-            />
-            <button
-              type="submit"
-              disabled={cmt === ""}
-              className={`${classes.cmt_btn} ${
-                cmt ? classes.cmt_btn_active : ""
-              }`}
-            >
-              POST
-            </button>
-          </form>
-        </div>
-      </div> */
-}
