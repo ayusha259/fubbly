@@ -1,20 +1,25 @@
 import mongoose from "mongoose";
 
-const commentSchema = mongoose.Schema({
-  user: {
-    type: mongoose.Types.ObjectId,
-    ref: "User",
-    required: true,
+const commentSchema = mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    comment: {
+      type: String,
+      required: true,
+    },
+    likes: {
+      type: Array,
+      default: [],
+    },
   },
-  comment: {
-    type: String,
-    required: true,
-  },
-  likes: {
-    type: Array,
-    default: [],
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const postSchema = mongoose.Schema(
   {

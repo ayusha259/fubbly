@@ -31,56 +31,54 @@ const BottomBar = () => {
   return (
     <>
       {user ? (
-        <div className="home--bottombar-container">
-          <div className="home--bottombar">
-            <Link to="../home">
-              <div>
-                {home ? (
-                  <HomeIcon className="mui--icon" />
-                ) : (
-                  <HomeOutlinedIcon className="mui--icon" />
-                )}
-              </div>
-            </Link>
-            <Link className="hide--search" to="../home/search">
-              <div>
-                {search ? (
-                  <SearchIcon className="mui--icon" />
-                ) : (
-                  <SearchOutlinedIcon className="mui--icon" />
-                )}
-              </div>
-            </Link>
-            <Link to="../home/post">
-              <div>
-                {post ? (
-                  <AddCircleIcon className="mui--icon" />
-                ) : (
-                  <AddCircleOutlineOutlinedIcon className="mui--icon" />
-                )}
-              </div>
-            </Link>
-            <Link to="../home/notifications">
-              <div>
-                {notification ? (
-                  <NotificationsIcon className="mui--icon" />
-                ) : (
-                  <Badge badgeContent={countNotifications()} color="secondary">
-                    <NotificationsNoneIcon className="mui--icon" />
-                  </Badge>
-                )}
-              </div>
-            </Link>
-            <Link to={`../home/profile/${user.username}`}>
-              <div>
-                {profile ? (
-                  <AccountCircleIcon className="mui--icon" />
-                ) : (
-                  <AccountCircleOutlinedIcon className="mui--icon" />
-                )}
-              </div>
-            </Link>
-          </div>
+        <div className="home--bottombar">
+          <Link to="../home">
+            <div>
+              {home ? (
+                <HomeIcon className="mui--icon" />
+              ) : (
+                <HomeOutlinedIcon className="mui--icon" />
+              )}
+            </div>
+          </Link>
+          <Link className="hide--search" to="../home/search">
+            <div>
+              {search ? (
+                <SearchIcon className="mui--icon" />
+              ) : (
+                <SearchOutlinedIcon className="mui--icon" />
+              )}
+            </div>
+          </Link>
+          <Link to="../home/post">
+            <div>
+              {post ? (
+                <AddCircleIcon className="mui--icon" />
+              ) : (
+                <AddCircleOutlineOutlinedIcon className="mui--icon" />
+              )}
+            </div>
+          </Link>
+          <Link to="../home/notifications">
+            <div>
+              {notification ? (
+                <NotificationsIcon className="mui--icon" />
+              ) : (
+                <Badge badgeContent={countNotifications()} color="secondary">
+                  <NotificationsNoneIcon className="mui--icon" />
+                </Badge>
+              )}
+            </div>
+          </Link>
+          <Link to={`../home/profile/${user.username}`}>
+            <div>
+              {profile ? (
+                <AccountCircleIcon className="mui--icon" />
+              ) : (
+                <AccountCircleOutlinedIcon className="mui--icon" />
+              )}
+            </div>
+          </Link>
         </div>
       ) : (
         ""

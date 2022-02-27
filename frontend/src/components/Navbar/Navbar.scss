@@ -18,11 +18,12 @@
 
     .logoutIcon {
       font-size: 20px;
+      margin-right: 7px;
     }
 
-    .logoutIcon:hover {
-      cursor: pointer;
-    }
+    // .logoutIcon:hover {
+    //   cursor: pointer;
+    // }
 
     .searchBar {
       background-color: #f8fbff;
@@ -52,6 +53,14 @@
         @media screen and (max-width: 400px) {
           font-size: 16px;
         }
+      }
+    }
+    #logout {
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+      &:hover {
+        cursor: pointer;
       }
     }
   }

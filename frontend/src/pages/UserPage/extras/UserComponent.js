@@ -140,7 +140,6 @@ const UserComponent = () => {
                     comments={post.comments}
                     width="80%"
                     liked={post.likes.some((u) => u === curr_user._id)}
-                    // postComment={postComment}
                     created={new Date(post.createdAt)}
                   />
                 </div>

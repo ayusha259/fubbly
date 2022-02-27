@@ -100,7 +100,8 @@ route.get("/notifications", auth, async (req, res, next) => {
         model: "User",
         select: "username profilePicture",
         options: { strictPopulate: false },
-      });
+      })
+      .sort("-createdAt");
     if (!user) {
       res.status(404);
       throw new Error("No user Found");
@@ -126,7 +127,15 @@ route.get("/:username", async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.params.username })
       .select("-password -email")
-      .populate({ path: "posts", options: { sort: { createdAt: -1 } } });
+      .populate({
+        path: "posts",
+        options: { sort: { createdAt: -1 } },
+        populate: {
+          path: "comments",
+          select: "",
+          populate: { path: "user", select: "username" },
+        },
+      });
     if (user) {
       res.status(200);
       res.json(user);
@@ -185,11 +194,11 @@ route.put("/follow", auth, async (req, res, next) => {
     await User.findByIdAndUpdate(targetId, {
       $push: { followers: user_id },
     });
-    await User.findByIdAndUpdate(targetId, {
-      $push: {
-        notifications: { type: "followed", targetId: user_id, read: false },
-      },
-    });
+    // await User.findByIdAndUpdate(targetId, {
+    //   $push: {
+    //     notifications: { type: "followed", targetId: user_id, read: false },
+    //   },
+    // });
     res.status(200).json("Followed successfully");
   } catch (error) {
     res.status(500);

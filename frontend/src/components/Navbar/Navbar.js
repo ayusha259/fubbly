@@ -61,7 +61,10 @@ const Navbar = ({ showSearch }) => {
           ) : (
             ""
           )}
-          <i onClick={handleLogout} className="fas fa-power-off logoutIcon"></i>
+          <span id="logout" onClick={handleLogout}>
+            <i className="fas fa-power-off logoutIcon"></i>
+            Logout
+          </span>
         </div>
       </div>
     </>

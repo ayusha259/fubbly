@@ -1,23 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
-import {
-  followUnfollow,
-  getAllUsers,
-  getFollowingPosts,
-  uploadPost,
-} from "../../actions/userAction";
+import { getAllUsers, getFollowingPosts } from "../../actions/userAction";
 import UserComponent from "./HomeExtra/UserComponent";
-import Avatar from "@material-ui/core/Avatar";
-import FollowUnfollow from "../../components/FollowUnfollowBtn/FollowUnfollow";
-import Loader from "../../components/Loader/Loader";
-import Posts from "../../components/Posts/Posts";
-import { Dialog, TextField, Button } from "@material-ui/core";
-import Tooltip from "@material-ui/core/Tooltip";
-import AddIcon from "@material-ui/icons/Add";
-import Fab from "@material-ui/core/Fab";
 import "./HomePage.scss";
-import axios from "axios";
 import HomeContent from "./HomeExtra/HomeContent";
 import UserPage from "../UserPage/UserPage";
 import BottomBar from "../../components/BottomBar/BottomBar";

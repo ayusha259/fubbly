@@ -11,7 +11,7 @@ import "./SearchPage.scss";
 
 const SearchPage = () => {
   const [foundUsers, setFoundUsers] = useState();
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
   const { user, auth } = useSelector((state) => state.userInfo);
   const handleReq = async () => {
     const { data } = await axios.get("/api/users/search", {

@@ -1,8 +1,8 @@
 .searchpage--container {
   width: 100%;
-
+  min-height: calc(100vh - 130px);
   .searchpage--input-container {
-    background-color: #e7eaee78;
+    background-color: rgba(245, 239, 239, 0.383);
     padding: 8px 10px;
     display: flex;
     justify-content: space-between;

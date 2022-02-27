@@ -1,5 +1,6 @@
 .notification--list {
   padding: 20px;
+  height: calc(100vh - 130px);
   .notification--div {
     display: flex;
     align-items: center;

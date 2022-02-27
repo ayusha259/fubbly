@@ -99,13 +99,13 @@ route.put("/like/:id", auth, async (req, res, next) => {
     if (post) {
       if (!post.likes.includes(user_id)) {
         await post.update({ $push: { likes: user_id } });
-        if (user_id !== post["user"]) {
-          await User.findByIdAndUpdate(post["user"], {
-            $push: {
-              notifications: { type: "liked", targetId: user_id, read: false },
-            },
-          });
-        }
+        // if (user_id !== post["user"]) {
+        //   await User.findByIdAndUpdate(post["user"], {
+        //     $push: {
+        //       notifications: { type: "liked", targetId: user_id, read: false },
+        //     },
+        //   });
+        // }
       } else {
         await post.update({ $pull: { likes: user_id } });
       }
@@ -119,7 +119,7 @@ route.put("/like/:id", auth, async (req, res, next) => {
   }
 });
 
-route.put("/comment/:id", auth, async (req, res, next) => {
+route.put("/comments/:id", auth, async (req, res, next) => {
   try {
     const user_id = req.user;
     const { comment } = req.body;
@@ -141,6 +141,54 @@ route.put("/comment/:id", auth, async (req, res, next) => {
         },
       });
       res.status(200).json("Comment Posted");
+    } else {
+      res.status(400);
+      throw new Error("Something went wrong");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+route.get("/comments/:id", async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (post) {
+      const comments = await post.populate({
+        path: "comments",
+        populate: [
+          { path: "user", select: "username profilePicture" },
+          { path: "likes", model: "User", select: "username" },
+        ],
+      });
+      res.status(200).json(comments["comments"]);
+    } else {
+      res.status(404);
+      throw new Error("Post not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+route.put("/comments/like/:id", auth, async (req, res, next) => {
+  try {
+    const user_id = req.user;
+    const comment = await Comment.findById(req.params.id);
+    if (comment) {
+      if (!comment.likes.includes(user_id)) {
+        await comment.update({ $push: { likes: user_id } });
+        // if (user_id !== comment["user"]) {
+        //   await User.findByIdAndUpdate(post["user"], {
+        //     $push: {
+        //       notifications: { type: "liked", targetId: user_id, read: false },
+        //     },
+        //   });
+        // }
+      } else {
+        await comment.update({ $pull: { likes: user_id } });
+      }
+      res.status(200).json("Success");
     } else {
       res.status(400);
       throw new Error("Something went wrong");
