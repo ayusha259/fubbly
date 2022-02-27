@@ -132,7 +132,7 @@ route.get("/:username", async (req, res, next) => {
         options: { sort: { createdAt: -1 } },
         populate: {
           path: "comments",
-          select: "",
+          options: { sort: { createdAt: -1 } },
           populate: { path: "user", select: "username" },
         },
       });

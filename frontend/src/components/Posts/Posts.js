@@ -101,6 +101,7 @@ const Posts = (props) => {
       {
         comment: comment,
         user: { username: user.username },
+        likes: [],
       },
     ]);
   };
@@ -200,6 +201,7 @@ const Posts = (props) => {
         </div>
 
         <span id="createdAt">{timeSince(created)}</span>
+
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -226,6 +228,11 @@ const Posts = (props) => {
             </button>
           </div>
         </form>
+        <div onClick={() => setShowComments(true)} id="showComments">
+          {stateComments.length > 0
+            ? `View ${stateComments.length} comments`
+            : ""}
+        </div>
       </div>
     </>
   );

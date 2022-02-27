@@ -43,6 +43,7 @@ route.get("/userposts", auth, async (req, res, next) => {
       .sort("-createdAt")
       .populate({
         path: "comments",
+        options: { sort: { createdAt: -1 } },
         populate: { path: "user", select: "username profilePicture" },
       })
       .populate("likes", "username profilePicture");
@@ -65,6 +66,7 @@ route.get("/followingposts", auth, async (req, res, next) => {
         .populate("user", "username profilePicture")
         .populate({
           path: "comments",
+          options: { sort: { createdAt: -1 } },
           populate: { path: "user", select: "username profilePicture" },
         })
         .populate("likes", "username profilePicture");
@@ -156,6 +158,7 @@ route.get("/comments/:id", async (req, res, next) => {
     if (post) {
       const comments = await post.populate({
         path: "comments",
+        options: { sort: { createdAt: -1 } },
         populate: [
           { path: "user", select: "username profilePicture" },
           { path: "likes", model: "User", select: "username" },
