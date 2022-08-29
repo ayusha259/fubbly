@@ -1,6 +1,7 @@
 {
   "name": "api",
   "type": "module",
+  "homepage": "http://keanu-app.herokuapp.com",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
